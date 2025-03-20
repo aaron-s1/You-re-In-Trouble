@@ -157,6 +157,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 2317618872172862598}
     m_Modifications:
+    - target: {fileID: 9078446951126248293, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 640
+      objectReference: {fileID: 0}
     - target: {fileID: 9078446951126248296, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -204,6 +208,14 @@ PrefabInstance:
     - target: {fileID: 9078446951126248301, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
       propertyPath: m_Name
       value: piss shooter (base) (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078446951126248301, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078446951126248301, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
+      propertyPath: m_TagString
+      value: Player1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
