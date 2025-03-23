@@ -10,9 +10,9 @@ scopes = {
 	"last_search.EAB0C2BA" = ""
 	"OpenInspectorPreview.EAB0C2BA" = "0"
 	"currentGroup.EAB0C2BA" = "all"
-	"last_search.8C24D059" = "physics 2d"
+	"last_search.8C24D059" = "lightin"
 	"OpenInspectorPreview.8C24D059" = "0"
-	"currentGroup.8C24D059" = "settings"
+	"currentGroup.8C24D059" = "menu"
 }
 providers = {
 	adb = {
@@ -59,6 +59,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"li"
 ]
 searchItemFavorites = [
 ]

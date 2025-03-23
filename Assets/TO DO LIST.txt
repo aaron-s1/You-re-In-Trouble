@@ -1,10 +1,16 @@
 
+CORE GAMEPLAY
+    ~ LEVEL DESIGN
+        - Procedural?
+    - Decide on how weapons spawn (and which spawn, and when)
+    - UI Blocks to grab weapons
+    - Fix collision of particles later
 
+    ~ WEAPONS
+        - Add more weapons
+        - Adjust how forces apply for each weapon, and how much, and when
 
-
-OPTIMIZATION
-- Fix collision of particles later.
-
-
-WEAPONS
-- Add new weapons.
+VISUALS
+- New player model
+- Make piss look way better
+- Handle animations (MUCH later)

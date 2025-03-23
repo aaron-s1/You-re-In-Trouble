@@ -13,6 +13,7 @@ public class PlayerAutoMove : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        Invoke("KillGravity", 10f);
     }
 
     void FixedUpdate()
@@ -30,5 +31,11 @@ public class PlayerAutoMove : MonoBehaviour
             float angle = Mathf.Atan2(mousePosition.y - playerPosition.y, mousePosition.x - playerPosition.x) * Mathf.Rad2Deg;
             rb.rotation = angle;
         }
+    }
+
+    void KillGravity()
+    {
+        rb.gravityScale = 1f;
+        pushForce = 0;
     }
 }
