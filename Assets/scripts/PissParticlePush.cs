@@ -28,7 +28,7 @@ public class PissParticlePush : MonoBehaviour
 
         if (rb != null)
         {
-            Debug.Log("pissing collision check passed");
+            Debug.Log($"{gameObject}'s pissing particles hit {other}'s rigidbody");
 
             Vector2 forceDirection = (other.transform.position - transform.position).normalized;
             

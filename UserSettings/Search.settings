@@ -10,9 +10,9 @@ scopes = {
 	"last_search.EAB0C2BA" = ""
 	"OpenInspectorPreview.EAB0C2BA" = "0"
 	"currentGroup.EAB0C2BA" = "all"
-	"last_search.8C24D059" = "lightin"
+	"last_search.8C24D059" = "parent"
 	"OpenInspectorPreview.8C24D059" = "0"
-	"currentGroup.8C24D059" = "menu"
+	"currentGroup.8C24D059" = "all"
 }
 providers = {
 	adb = {
@@ -59,6 +59,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"p"
 	"li"
 ]
 searchItemFavorites = [
