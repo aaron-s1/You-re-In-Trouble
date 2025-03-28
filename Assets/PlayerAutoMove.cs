@@ -68,6 +68,14 @@ public class PlayerAutoMove : MonoBehaviour
         Vector2 pushDirection = (playerPos - mousePos).normalized;
         rb.velocity = Vector2.zero;
         rb.AddForce(pushDirection * pushForce * burstForceMultiplier, ForceMode2D.Impulse);
+        
+        // Vector2 pushDirection = (playerPos - mousePos).normalized;
+
+        // float alignment = Vector2.Dot(rb.velocity.normalized, pushDirection);
+
+        // float forceMultiplier = alignment > 0.5f ? 1.5f : 1f;
+
+        // rb.AddForce(pushDirection * pushForce * burstForceMultiplier * forceMultiplier, ForceMode2D.Impulse);
     }
 
     

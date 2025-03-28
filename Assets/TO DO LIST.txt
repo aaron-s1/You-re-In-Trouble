@@ -7,7 +7,7 @@ CORE GAMEPLAY
     - Fix collision of particles later
 
     ~ WEAPONS
-        - Add more weapons
+        - Add more weapons (machine gun?, )
         - Adjust how forces apply for each weapon, and how much, and when
 
 VISUALS
