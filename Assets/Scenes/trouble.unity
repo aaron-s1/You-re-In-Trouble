@@ -864,6 +864,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &359999191 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2586040851862992125, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+  m_PrefabInstance: {fileID: 2317618871342480003}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &384202163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2474,6 +2479,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: b0cdcba8c7d787d4cb92f6161f240194, type: 3}
+--- !u!1 &2044753106 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7162760500130087858, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+  m_PrefabInstance: {fileID: 2317618871342480003}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &455874723530965222
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,6 +2575,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: streamer
+      value: 
+      objectReference: {fileID: 2044753106}
+    - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: pushForce
       value: 4
       objectReference: {fileID: 0}
@@ -2573,8 +2587,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: shotgunWeapon
+      value: 
+      objectReference: {fileID: 359999191}
+    - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: streamerWeapon
+      value: 
+      objectReference: {fileID: 2044753106}
+    - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: burstForceMultiplier
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2586040851862992125, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5757189417937376303, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_IsActive
@@ -2734,11 +2760,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffad54d872f497842bcfb5d1d4b0c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  streamerWeapon: {fileID: 0}
+  shotgunWeapon: {fileID: 0}
   deadZoneTurnRadius: 1
   pushForce: 5
   soundClip: {fileID: 0}
   activeWeapon: {fileID: 0}
-  isBurstWeapon: 0
   burstForceMultiplier: 5
   burstWeaponCooldown: 1
 --- !u!212 &2586040852248550720
