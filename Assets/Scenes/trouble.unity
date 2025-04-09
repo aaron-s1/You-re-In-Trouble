@@ -2598,6 +2598,10 @@ PrefabInstance:
       propertyPath: burstForceMultiplier
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: streamerPushForceCoefficient
+      value: 0.0035
+      objectReference: {fileID: 0}
     - target: {fileID: 2586040851862992125, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2764,6 +2768,7 @@ MonoBehaviour:
   shotgunWeapon: {fileID: 0}
   deadZoneTurnRadius: 1
   pushForce: 5
+  streamerPushForceCoefficient: 0.01
   soundClip: {fileID: 0}
   activeWeapon: {fileID: 0}
   burstForceMultiplier: 5

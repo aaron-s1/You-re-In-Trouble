@@ -10,6 +10,7 @@ public class PlayerAutoMove : MonoBehaviour
 
     [Space(10)]
     [SerializeField] float pushForce = 10f;
+    [SerializeField] float streamerPushForceCoefficient = 0.01f;
 
     [Space(10)]
     [SerializeField] AudioSource soundClip;
@@ -24,12 +25,35 @@ public class PlayerAutoMove : MonoBehaviour
     bool canShootShotgun = true;
 
 
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         activeWeapon = streamerWeapon;
         streamerWeapon.SetActive(true);
+    }
+
+    void Update()
+    {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 playerPosition = rb.position;
+
+        if (Input.GetMouseButton(0) && canShootShotgun)
+        {
+            if (activeWeapon != shotgunWeapon)
+            {
+                activeWeapon.SetActive(false);
+                activeWeapon = shotgunWeapon;
+                activeWeapon.SetActive(true);
+            }
+
+            PerformWeaponBurst(mousePosition, playerPosition);
+        }
+
+        else if (Input.GetMouseButton(1))
+            ActivateStreamer(true, playerPosition, mousePosition);
+
+        if (Input.GetMouseButtonUp(1))
+            ActivateStreamer(false, playerPosition, mousePosition);
     }
 
 
@@ -44,39 +68,38 @@ public class PlayerAutoMove : MonoBehaviour
             float angle = Mathf.Atan2(mousePosition.y - playerPosition.y, mousePosition.x - playerPosition.x) * Mathf.Rad2Deg;
             rb.rotation = angle;
         }
+    }
 
-        if (Input.GetMouseButton(0) && canShootShotgun)
-        {
-            if (activeWeapon != shotgunWeapon)
-            {
-                activeWeapon.SetActive(false);
-                activeWeapon = shotgunWeapon;
-                activeWeapon.SetActive(true);
-            }
 
-            PerformWeaponBurst(mousePosition, playerPosition);
-            // ^ also applies movement.
-        }
-
-        else if (Input.GetMouseButton(1))
+    void ActivateStreamer(bool activate, Vector2 playerPos, Vector2 mousePos)
+    {
+        if (activate)
         {
             if (activeWeapon != streamerWeapon)
             {
-                activeWeapon.SetActive(false);
+                if (activeWeapon != null)
+                    activeWeapon.SetActive(false);
+                                
                 activeWeapon = streamerWeapon;
-                activeWeapon.SetActive(true);
                 rb.velocity = Vector2.zero;
             }
 
-            Debug.Log("right click being held down");
+            if (!activeWeapon.activeInHierarchy)
+                activeWeapon.SetActive(true);
+            
 
-            Vector2 pushDirection = (playerPosition - mousePosition).normalized;
+            Vector2 pushDirection = (playerPos - mousePos).normalized;
             // rb.velocity = Vector2.zero;
-            rb.AddForce(pushDirection * pushForce * 0.01f, ForceMode2D.Impulse);
-
+            rb.AddForce(pushDirection * pushForce * streamerPushForceCoefficient, ForceMode2D.Impulse);        
             // Vector2 pushDirection = (playerPosition - mousePosition).normalized;
-            // rb.velocity = pushDirection * pushForce * .1f;
-        }        
+            // rb.velocity = pushDirection * pushForce * .1f;                       
+        }
+        
+        else
+        {
+            activeWeapon.GetComponent<ParticleSystem>().Stop();
+            activeWeapon.SetActive(false);            
+        }
     }
 
 #region BURST WEAPON.
