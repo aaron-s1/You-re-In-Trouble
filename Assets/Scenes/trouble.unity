@@ -2579,10 +2579,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2044753106}
     - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
-      propertyPath: pushForce
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: isBurstWeapon
       value: 1
       objectReference: {fileID: 0}
@@ -2598,10 +2594,6 @@ PrefabInstance:
       propertyPath: burstForceMultiplier
       value: 0.6
       objectReference: {fileID: 0}
-    - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
-      propertyPath: streamerPushForceCoefficient
-      value: 0.0035
-      objectReference: {fileID: 0}
     - target: {fileID: 2586040851862992125, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2610,8 +2602,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7162760500130087858, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 6410533116008587884, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: isShotgun
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410533116008587884, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: isBurstWeapon
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2764,15 +2760,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffad54d872f497842bcfb5d1d4b0c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  streamerWeapon: {fileID: 0}
-  shotgunWeapon: {fileID: 0}
+  streamerWeaponObject: {fileID: 0}
+  shotgunWeaponObject: {fileID: 0}
   deadZoneTurnRadius: 1
   pushForce: 5
   streamerPushForceCoefficient: 0.01
-  soundClip: {fileID: 0}
-  activeWeapon: {fileID: 0}
-  burstForceMultiplier: 5
-  burstWeaponCooldown: 1
 --- !u!212 &2586040852248550720
 SpriteRenderer:
   m_ObjectHideFlags: 0

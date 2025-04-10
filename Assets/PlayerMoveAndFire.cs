@@ -1,10 +1,17 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerAutoMove : MonoBehaviour
+public class PlayerMoveAndFire : MonoBehaviour
 {
-    [SerializeField] GameObject streamerWeapon; // (perhaps make not actually a weapon later)
-    [SerializeField] GameObject shotgunWeapon;
+    // [SerializeField] GameObject streamerWeapon; // (perhaps make not actually a weapon later)
+    // [SerializeField] GameObject shotgunWeapon;
+
+    [SerializeField] GameObject streamerWeaponObject; // (perhaps make not actually a weapon later)
+    [SerializeField] GameObject shotgunWeaponObject;
+
+    Weapon activeWeapon;
+    Weapon streamerWeapon;
+    Weapon shotgunWeapon;
     
     [SerializeField] float deadZoneTurnRadius = 1f;
 
@@ -12,24 +19,25 @@ public class PlayerAutoMove : MonoBehaviour
     [SerializeField] float pushForce = 10f;
     [SerializeField] float streamerPushForceCoefficient = 0.01f;
 
-    [Space(10)]
-    [SerializeField] AudioSource soundClip;
-
-    [Space(15)]
-    public GameObject activeWeapon;
-    [SerializeField] float burstForceMultiplier = 5f;
-    [SerializeField] float burstWeaponCooldown = 1f;
+    // [SerializeField] AudioSource soundClip;
+    // public GameObject activeWeapon;
+    // [SerializeField] float burstForceMultiplier = 5f;
+    // [SerializeField] float burstWeaponCooldown = 1f;
 
 
     Rigidbody2D rb;
-    bool canShootShotgun = true;
+    bool canFireBurstWeapon = true;
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        streamerWeapon = streamerWeaponObject.GetComponent<Weapon>();
+        shotgunWeapon = shotgunWeaponObject.GetComponent<Weapon>();
+
         activeWeapon = streamerWeapon;
-        streamerWeapon.SetActive(true);
+        streamerWeaponObject.SetActive(true);
     }
 
     void Update()
@@ -37,13 +45,13 @@ public class PlayerAutoMove : MonoBehaviour
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 playerPosition = rb.position;
 
-        if (Input.GetMouseButton(0) && canShootShotgun)
+        if (Input.GetMouseButton(0) && canFireBurstWeapon)
         {
             if (activeWeapon != shotgunWeapon)
             {
-                activeWeapon.SetActive(false);
+                activeWeapon.gameObject.SetActive(false);
                 activeWeapon = shotgunWeapon;
-                activeWeapon.SetActive(true);
+                activeWeapon.gameObject.SetActive(true);
             }
 
             PerformWeaponBurst(mousePosition, playerPosition);
@@ -78,14 +86,14 @@ public class PlayerAutoMove : MonoBehaviour
             if (activeWeapon != streamerWeapon)
             {
                 if (activeWeapon != null)
-                    activeWeapon.SetActive(false);
+                    activeWeapon.gameObject.SetActive(false);
                                 
                 activeWeapon = streamerWeapon;
                 rb.velocity = Vector2.zero;
             }
 
-            if (!activeWeapon.activeInHierarchy)
-                activeWeapon.SetActive(true);
+            if (!activeWeapon.gameObject.activeInHierarchy)
+                activeWeapon.gameObject.SetActive(true);
             
 
             Vector2 pushDirection = (playerPos - mousePos).normalized;
@@ -98,18 +106,22 @@ public class PlayerAutoMove : MonoBehaviour
         else
         {
             activeWeapon.GetComponent<ParticleSystem>().Stop();
-            activeWeapon.SetActive(false);            
+            activeWeapon.gameObject.SetActive(false);            
         }
     }
 
 #region BURST WEAPON.
     void PerformWeaponBurst(Vector2 mousePosition, Vector2 playerPosition)
     {
-        SpawnBurstParticles();        
+        if (!activeWeapon.isBurstWeapon)
+            return;
+
+        activeWeapon.PlayBurstParticles();  // SpawnBurstParticles();
         ApplyBurstMovement(mousePosition, playerPosition);
 
-        canShootShotgun = false;
+        canFireBurstWeapon = false;
 
+        
         StartCoroutine(ResetBurstWeaponCooldown());
     }
 
@@ -117,7 +129,7 @@ public class PlayerAutoMove : MonoBehaviour
     {
         Vector2 pushDirection = (playerPos - mousePos).normalized;
         rb.velocity = Vector2.zero;
-        rb.AddForce(pushDirection * pushForce * burstForceMultiplier, ForceMode2D.Impulse);
+        rb.AddForce(pushDirection * pushForce * activeWeapon.BurstMultiplier, ForceMode2D.Impulse);
 
         // Vector2 pushDirection = (playerPos - mousePos).normalized;
         // float alignment = Vector2.Dot(rb.velocity.normalized, pushDirection);
@@ -135,14 +147,16 @@ public class PlayerAutoMove : MonoBehaviour
         newParticlesHolder.GetComponent<ParticleSystem>().Play();
         newParticlesHolder.transform.parent = null;
 
-        StartCoroutine(DeleteObj(newParticlesHolder, burstWeaponCooldown));
+        // StartCoroutine(DeleteObj(newParticlesHolder, burstWeaponCooldown));
     }
 
 
     IEnumerator ResetBurstWeaponCooldown()
     {
-        yield return new WaitForSeconds(burstWeaponCooldown);
-        canShootShotgun = true;
+        // if (activeWeapon.isBurstWeapon)
+        // yield return new WaitForSeconds(activeWeapon.gameObject.GetComponent<IsBurstWeapon>().burstWeaponCooldown);
+        yield return new WaitForSeconds(activeWeapon.BurstWeaponCooldown);
+        canFireBurstWeapon = true;
     }
 #endregion
 

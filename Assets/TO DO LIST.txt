@@ -1,16 +1,26 @@
+REMEMBER: Fast, smooth gameplay. Small levels. 10-30 seconds of gameplay per level.
+
 
 CORE GAMEPLAY
     ~ LEVEL DESIGN
         - Procedural?
     - Decide on how weapons spawn (and which spawn, and when)
-    - UI Blocks to grab weapons
+    - Interactable UI Blocks that contain the weapons
     - Fix collision of particles later
 
     ~ WEAPONS
-        - Add more weapons (machine gun?, )
+        - Add more weapons (machine gun?, ...)
         - Adjust how forces apply for each weapon, and how much, and when
 
+    ~ PLAYER
+        - Health amounts
+        - Seperate more Weapon functionality from Movement
+
 VISUALS
+- Make piss particles from Streamer stay active if weapon is changed out
 - New player model
 - Make piss look way better
 - Handle animations (MUCH later)
+
+
+

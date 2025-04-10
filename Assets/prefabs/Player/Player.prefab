@@ -181,13 +181,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffad54d872f497842bcfb5d1d4b0c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  streamerWeaponObject: {fileID: 7162760500130087858}
+  shotgunWeaponObject: {fileID: 2586040851862992125}
   deadZoneTurnRadius: 0.5
-  pushForce: 5
-  soundClip: {fileID: 0}
-  activeWeapon: {fileID: 2586040851862992125}
-  isBurstWeapon: 0
-  burstForceMultiplier: 5
-  burstWeaponCooldown: 1
+  pushForce: 4
+  streamerPushForceCoefficient: 0.0035
 --- !u!1001 &2205114406481668319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -259,6 +257,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
+--- !u!1 &7162760500130087858 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9078446951126248301, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
+  m_PrefabInstance: {fileID: 2205114406481668319}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7162760500130087863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9078446951126248296, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
