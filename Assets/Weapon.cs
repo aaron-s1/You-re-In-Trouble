@@ -7,22 +7,22 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] float pushForce = 0;
-    [SerializeField] float burstForceMultiplier = 5f;
+    // [SerializeField] float burstForceMultiplier = 5f;
 
     [Space(10)]
     [SerializeField] ParticleSystem particles;
     [SerializeField] AudioSource soundClip;
 
 
-    public float BurstMultiplier => burstForceMultiplier;
-    public float BurstWeaponCooldown => shotgunSettings.burstWeaponCooldown;
+    public float BurstForceMultiplier => burstSettings.burstForceMultiplier;
+    public float BurstWeaponCooldown => burstSettings.burstWeaponCooldown;
     
 
     [Space(15)]
     [SerializeField] public bool isBurstWeapon;
 
 
-    [SerializeField] IsBurstWeapon shotgunSettings;
+    [SerializeField] IsBurstWeapon burstSettings;
 
 
     public void PlayBurstParticles()
@@ -34,10 +34,10 @@ public class Weapon : MonoBehaviour
 
     #region Folds variables away for non-Streamer Weapon.
     [System.Serializable]
-    public class IsBurstWeapon
+    internal class IsBurstWeapon
     {
-        [SerializeField] public float burstWeaponCooldown = 0;
-        [SerializeField] float burstForceMultiplier = 1f;
+        [SerializeField] internal float burstWeaponCooldown = 0;
+        [SerializeField] internal float burstForceMultiplier = 1f;
     }
 
     #endregion
@@ -47,22 +47,22 @@ public class Weapon : MonoBehaviour
 public class WeaponEditor : Editor
 {
     SerializedProperty isBurstWeapon;
-    SerializedProperty shotgunSettings;
+    SerializedProperty burstSettings;
 
     void OnEnable()
     {
         isBurstWeapon = serializedObject.FindProperty("isBurstWeapon");
-        shotgunSettings = serializedObject.FindProperty("shotgunSettings");
+        burstSettings = serializedObject.FindProperty("burstSettings");
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-        DrawPropertiesExcluding(serializedObject, "shotgunSettings");
+        DrawPropertiesExcluding(serializedObject, "burstSettings");
 
         if (isBurstWeapon.boolValue)
-            EditorGUILayout.PropertyField(shotgunSettings, true);
+            EditorGUILayout.PropertyField(burstSettings, true);
 
         serializedObject.ApplyModifiedProperties();
     }

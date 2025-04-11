@@ -1,11 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerMoveAndFire : MonoBehaviour
+// Also (currently?) handles recoil movement from Firing.
+public class PlayerFire : MonoBehaviour
 {
-    // [SerializeField] GameObject streamerWeapon; // (perhaps make not actually a weapon later)
-    // [SerializeField] GameObject shotgunWeapon;
-
     [SerializeField] GameObject streamerWeaponObject; // (perhaps make not actually a weapon later)
     [SerializeField] GameObject shotgunWeaponObject;
 
@@ -13,16 +11,9 @@ public class PlayerMoveAndFire : MonoBehaviour
     Weapon streamerWeapon;
     Weapon shotgunWeapon;
     
-    [SerializeField] float deadZoneTurnRadius = 1f;
-
     [Space(10)]
     [SerializeField] float pushForce = 10f;
     [SerializeField] float streamerPushForceCoefficient = 0.01f;
-
-    // [SerializeField] AudioSource soundClip;
-    // public GameObject activeWeapon;
-    // [SerializeField] float burstForceMultiplier = 5f;
-    // [SerializeField] float burstWeaponCooldown = 1f;
 
 
     Rigidbody2D rb;
@@ -36,7 +27,8 @@ public class PlayerMoveAndFire : MonoBehaviour
         streamerWeapon = streamerWeaponObject.GetComponent<Weapon>();
         shotgunWeapon = shotgunWeaponObject.GetComponent<Weapon>();
 
-        activeWeapon = streamerWeapon;
+        // Add a default weapon.
+        activeWeapon = streamerWeapon; 
         streamerWeaponObject.SetActive(true);
     }
 
@@ -65,20 +57,6 @@ public class PlayerMoveAndFire : MonoBehaviour
     }
 
 
-    void FixedUpdate()
-    {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 playerPosition = rb.position;
-
-        // Player targets mouse.
-        if (Vector2.Distance(playerPosition, mousePosition) > deadZoneTurnRadius)
-        {
-            float angle = Mathf.Atan2(mousePosition.y - playerPosition.y, mousePosition.x - playerPosition.x) * Mathf.Rad2Deg;
-            rb.rotation = angle;
-        }
-    }
-
-
     void ActivateStreamer(bool activate, Vector2 playerPos, Vector2 mousePos)
     {
         if (activate)
@@ -97,8 +75,10 @@ public class PlayerMoveAndFire : MonoBehaviour
             
 
             Vector2 pushDirection = (playerPos - mousePos).normalized;
+            rb.AddForce(pushDirection * pushForce * streamerPushForceCoefficient, ForceMode2D.Impulse);
+
+            // Alternate movement.
             // rb.velocity = Vector2.zero;
-            rb.AddForce(pushDirection * pushForce * streamerPushForceCoefficient, ForceMode2D.Impulse);        
             // Vector2 pushDirection = (playerPosition - mousePosition).normalized;
             // rb.velocity = pushDirection * pushForce * .1f;                       
         }
@@ -120,7 +100,6 @@ public class PlayerMoveAndFire : MonoBehaviour
         ApplyBurstMovement(mousePosition, playerPosition);
 
         canFireBurstWeapon = false;
-
         
         StartCoroutine(ResetBurstWeaponCooldown());
     }
@@ -129,8 +108,9 @@ public class PlayerMoveAndFire : MonoBehaviour
     {
         Vector2 pushDirection = (playerPos - mousePos).normalized;
         rb.velocity = Vector2.zero;
-        rb.AddForce(pushDirection * pushForce * activeWeapon.BurstMultiplier, ForceMode2D.Impulse);
+        rb.AddForce(pushDirection * pushForce * activeWeapon.BurstForceMultiplier, ForceMode2D.Impulse);
 
+        // Alternate movement.
         // Vector2 pushDirection = (playerPos - mousePos).normalized;
         // float alignment = Vector2.Dot(rb.velocity.normalized, pushDirection);
         // float forceMultiplier = alignment > 0.5f ? 1.5f : 1f;
@@ -146,15 +126,11 @@ public class PlayerMoveAndFire : MonoBehaviour
         newParticlesHolder.transform.parent = gameObject.transform;
         newParticlesHolder.GetComponent<ParticleSystem>().Play();
         newParticlesHolder.transform.parent = null;
-
-        // StartCoroutine(DeleteObj(newParticlesHolder, burstWeaponCooldown));
     }
 
 
     IEnumerator ResetBurstWeaponCooldown()
     {
-        // if (activeWeapon.isBurstWeapon)
-        // yield return new WaitForSeconds(activeWeapon.gameObject.GetComponent<IsBurstWeapon>().burstWeaponCooldown);
         yield return new WaitForSeconds(activeWeapon.BurstWeaponCooldown);
         canFireBurstWeapon = true;
     }
