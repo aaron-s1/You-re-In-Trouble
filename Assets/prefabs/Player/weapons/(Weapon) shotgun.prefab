@@ -4908,6 +4908,18 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5074688410807847603, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
+      propertyPath: isBurstWeapon
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074688410807847603, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
+      propertyPath: burstSettings.burstWeaponCooldown
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074688410807847603, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
+      propertyPath: burstSettings.burstForceMultiplier
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9078446951126248292, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
       propertyPath: pushForce
       value: 2
