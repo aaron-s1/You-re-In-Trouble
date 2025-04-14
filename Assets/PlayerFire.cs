@@ -6,10 +6,14 @@ public class PlayerFire : MonoBehaviour
 {
     [SerializeField] GameObject streamerWeaponObject; // (perhaps make not actually a weapon later)
     [SerializeField] GameObject shotgunWeaponObject;
+    [SerializeField] GameObject sniperWeaponObject;
+
+    [SerializeField] Texture2D sniperCursor;
 
     Weapon activeWeapon;
     Weapon streamerWeapon;
     Weapon shotgunWeapon;
+    Weapon sniperWeapon;
     
     [Space(10)]
     [SerializeField] float pushForce = 10f;
@@ -19,6 +23,8 @@ public class PlayerFire : MonoBehaviour
     Rigidbody2D rb;
     bool canFireBurstWeapon = true;
 
+    public bool sniperWeaponTest;
+
 
     void Start()
     {
@@ -26,6 +32,7 @@ public class PlayerFire : MonoBehaviour
 
         streamerWeapon = streamerWeaponObject.GetComponent<Weapon>();
         shotgunWeapon = shotgunWeaponObject.GetComponent<Weapon>();
+        // sniperWeapon = sniperWeapon.GetComponent<Weapon>();
 
         // Add a default weapon.
         activeWeapon = streamerWeapon; 
@@ -54,6 +61,15 @@ public class PlayerFire : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1))
             ActivateStreamer(false, playerPosition, mousePosition);
+
+        if (sniperWeaponTest)
+        {
+            // activeWeapon = sniperWeapon;
+            sniperWeaponTest = false;
+            gameObject.GetComponent<CursorSetter>().hasSniperWeapon = true;
+        }
+
+        // ActivateSniperCursor();
     }
 
 
@@ -135,6 +151,24 @@ public class PlayerFire : MonoBehaviour
         canFireBurstWeapon = true;
     }
 #endregion
+
+
+
+    // void OnMouseEnter()
+    // {
+    //     Cursor.SetCursor(sniperCursor, hotSpot, CursorMode.Auto);
+    // }
+
+    // void OnMouseExit()
+    // {
+    //     // Pass 'null' to the texture parameter to use the default system cursor.
+    //     Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    // }
+
+    // void ActivateSniperCursor()
+    // {
+
+    // }
 
     
 
