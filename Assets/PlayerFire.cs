@@ -10,7 +10,7 @@ public class PlayerFire : MonoBehaviour
 
     [SerializeField] Texture2D sniperCursor;
 
-    Weapon activeWeapon;
+    public Weapon activeWeapon; // temp active.
     Weapon streamerWeapon;
     Weapon shotgunWeapon;
     Weapon sniperWeapon;
@@ -136,12 +136,12 @@ public class PlayerFire : MonoBehaviour
     
     void SpawnBurstParticles()
     {
-        GameObject weaponParticlesHolder = shotgunWeapon.transform.GetChild(0).gameObject;
+        // GameObject weaponParticlesHolder = shotgunWeapon.transform.GetChild(0).gameObject;
 
-        GameObject newParticlesHolder = Instantiate(weaponParticlesHolder, weaponParticlesHolder.transform.position, weaponParticlesHolder.transform.rotation);
-        newParticlesHolder.transform.parent = gameObject.transform;
-        newParticlesHolder.GetComponent<ParticleSystem>().Play();
-        newParticlesHolder.transform.parent = null;
+        // GameObject newParticlesHolder = Instantiate(weaponParticlesHolder, weaponParticlesHolder.transform.position, weaponParticlesHolder.transform.rotation);
+        // newParticlesHolder.transform.parent = gameObject.transform;
+        // newParticlesHolder.GetComponent<ParticleSystem>().Play();
+        // newParticlesHolder.transform.parent = null;
     }
 
 
