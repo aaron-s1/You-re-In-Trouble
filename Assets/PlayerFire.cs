@@ -90,13 +90,9 @@ public class PlayerFire : MonoBehaviour
                 activeWeapon.gameObject.SetActive(true);
             
 
-            Vector2 pushDirection = (playerPos - mousePos).normalized;
-            rb.AddForce(pushDirection * pushForce * streamerPushForceCoefficient, ForceMode2D.Impulse);
-
-            // Alternate movement.
-            // rb.velocity = Vector2.zero;
-            // Vector2 pushDirection = (playerPosition - mousePosition).normalized;
-            // rb.velocity = pushDirection * pushForce * .1f;                       
+            
+            Move(playerPos, mousePos);
+            // AlternateMove(playerPos, mousePos);
         }
         
         else
@@ -105,6 +101,19 @@ public class PlayerFire : MonoBehaviour
             activeWeapon.gameObject.SetActive(false);            
         }
     }
+
+    void Move(Vector2 playerPos, Vector2 mousePos)
+    {
+        Vector2 pushDirection = (playerPos - mousePos).normalized;
+        rb.AddForce(pushDirection * pushForce * streamerPushForceCoefficient, ForceMode2D.Impulse);
+    }
+
+    // void AlternateMove(Vector2 playerPos, Vector2 mousePos)
+    // {
+    //     rb.velocity = Vector2.zero;
+    //     Vector2 pushDirection = (playerPos - mousePos).normalized;
+    //     rb.velocity = pushDirection * pushForce * .1f;        
+    // }
 
 #region BURST WEAPON.
     void PerformWeaponBurst(Vector2 mousePosition, Vector2 playerPosition)

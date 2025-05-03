@@ -4,11 +4,13 @@ using UnityEditor;
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] float pushForce = 0;
-    // [SerializeField] float burstForceMultiplier = 5f;
+    // [SerializeField] float pushForce = 0;
+    [SerializeField] Transform subEmitterSpawnPoint;
+    public Vector3 subEmitterSpawnPos;
 
     [Space(10)]
     [SerializeField] ParticleSystem particles;
@@ -26,18 +28,21 @@ public class Weapon : MonoBehaviour
     [SerializeField] IsBurstWeapon burstSettings;
 
     void Start()
-    {        
-        Debug.Log(GetComponentInChildren<ParticleSystem>());
-        try
-        {           
+    {
+        if (subEmitterSpawnPoint != null)
+            subEmitterSpawnPos = subEmitterSpawnPoint.position;
+        // Debug.Log(GetComponentInChildren<ParticleSystem>());
+        // try
+        // {           
             particles = GetComponentInChildren<ParticleSystem>();
-        }
-        catch (System.Exception)
-        {
-            throw;
-        }
+        // }
+        // catch (System.Exception)
+        // {
+        //     throw;
+        // }
         // Debug.Log("weapon says its particle holder is: " + transform.GetChild(0).gameObject);
     }
+
 
 
     public void PlayBurstParticles()
@@ -71,7 +76,59 @@ public class Weapon : MonoBehaviour
     }
 
     #endregion
+
+        void OnParticleTrigger()
+        {
+            ParticleSystem ps = GetComponent<ParticleSystem>();
+            List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
+            int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
+
+            for (int i = 0; i < numEnter; i++)
+            {
+                ParticleSystem.Particle p = enter[i];
+
+                // Change direction
+                Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right * 10f); // Example bounce
+                p.velocity = newDirection;
+
+                enter[i] = p; // Make sure to assign it back
+            }
+
+            // Apply changes
+            ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
+        }
+
+
+        // void OnParticleTrigger()
+        // {
+        //     Debug.Log($"{gameObject}'s particles touched something");
+        //     ParticleSystem ps = GetComponent<ParticleSystem>();
+        //     List<ParticleSystem.Particle> triggered = new List<ParticleSystem.Particle>();
+
+        //     int insideCount = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Inside, triggered);
+
+        //     for (int i = 0; i < insideCount; i++)
+        //     {
+        //         Debug.Log("I'm inside");
+        //         ParticleSystem.Particle p = triggered[i];
+
+        //         // Redirect particle (e.g., reflect or randomly deflect)
+        //         Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right * 100f); // Example
+        //         p.velocity = newDirection * p.velocity.magnitude * 100f;
+
+        //         // Optional: change color, size, lifetime to simulate reaction
+        //         // p.startColor = Color.cyan;
+        //         // p.remainingLifetime *= 0.8f;
+
+        //         triggered[i] = p;
+        //     }
+
+        //     ps.SetTriggerParticles(ParticleSystemTriggerEventType.Inside, triggered);
+        // }
 }
+
+
+
 #region GUI for non-Streamer Weapon folding.
 [CustomEditor(typeof(Weapon))]
 public class WeaponEditor : Editor
