@@ -79,16 +79,21 @@ public class Weapon : MonoBehaviour
 
         void OnParticleTrigger()
         {
+            // received a particle.
             ParticleSystem ps = GetComponent<ParticleSystem>();
             List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
             int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
+
+            Debug.Log($"{ps.transform.parent?.name} was hit with a particle");
 
             for (int i = 0; i < numEnter; i++)
             {
                 ParticleSystem.Particle p = enter[i];
 
                 // Change direction
-                Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right * 10f); // Example bounce
+                Debug.Log("should change direction");
+                Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right); // Or any direction
+
                 p.velocity = newDirection;
 
                 enter[i] = p; // Make sure to assign it back
