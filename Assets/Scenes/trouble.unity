@@ -12886,6 +12886,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9078446951126248293, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
+      propertyPath: TriggerModule.radiusScale
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078446951126248293, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
       propertyPath: ExternalForcesModule.enabled
       value: 1
       objectReference: {fileID: 0}
@@ -12949,9 +12953,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9078446951126248298, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
+      propertyPath: m_RenderMode
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9078446951126248301, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
       propertyPath: m_Name
-      value: (Weapon) streamer
+      value: Player2 Streamer TEST
       objectReference: {fileID: 0}
     - target: {fileID: 9078446951126248301, guid: 7af0dffdf45f61841bec770e1fc1a5f4, type: 3}
       propertyPath: m_Layer
@@ -12989,7 +12997,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.346756, y: -0.25446987}
+  m_Offset: {x: 0.3670807, y: -0.25446987}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -13000,7 +13008,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.693512, y: 11.052425}
+  m_Size: {x: 1.7341614, y: 11.052425}
   m_EdgeRadius: 0
 --- !u!4 &1031015073 stripped
 Transform:
@@ -14734,7 +14742,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.3388996, y: -0.25446963}
+  m_Offset: {x: 0.56710815, y: -0.25446987}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -14745,7 +14753,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.677799, y: 11.052425}
+  m_Size: {x: 2.1342163, y: 11.052425}
   m_EdgeRadius: 0
 --- !u!1 &2044999805
 GameObject:
@@ -15137,6 +15145,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7162760500130087861, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: m_RenderMode
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7162760500130087866, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: SubModule.enabled
       value: 0
@@ -15158,6 +15170,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7162760500130087866, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: TriggerModule.radiusScale
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7162760500130087866, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: ExternalForcesModule.enabled
       value: 1
       objectReference: {fileID: 0}
@@ -15168,7 +15184,7 @@ PrefabInstance:
     - target: {fileID: 7162760500130087866, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: TriggerModule.primitives.Array.data[0]
       value: 
-      objectReference: {fileID: 2317618871342480004}
+      objectReference: {fileID: 1031015073}
     - target: {fileID: 7162760500130087866, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: SubModule.subEmitters.Array.data[0].type
       value: 4
