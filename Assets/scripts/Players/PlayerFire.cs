@@ -4,13 +4,16 @@ using UnityEngine;
 // Also (currently?) handles recoil movement from Firing.
 public class PlayerFire : MonoBehaviour
 {
-    [SerializeField] GameObject streamerWeaponObject; // (perhaps make not actually a weapon later)
+    public delegate void WeaponChangedHandler(Weapon newWeapon);
+    public event WeaponChangedHandler OnWeaponChanged;
+
+    [SerializeField] GameObject streamerWeaponObject; // (perhaps make not actually a weapon (that damages) later)
     [SerializeField] GameObject shotgunWeaponObject;
     [SerializeField] GameObject sniperWeaponObject;
 
     [SerializeField] Texture2D sniperCursor;
 
-    public Weapon activeWeapon; // temp active.
+    public Weapon activeWeapon; // temporarily public.
     Weapon streamerWeapon;
     Weapon shotgunWeapon;
     Weapon sniperWeapon;
@@ -35,8 +38,21 @@ public class PlayerFire : MonoBehaviour
         // sniperWeapon = sniperWeapon.GetComponent<Weapon>();
 
         // Add a default weapon.
-        activeWeapon = streamerWeapon; 
-        streamerWeaponObject.SetActive(true);
+        SetActiveWeapon(streamerWeapon);
+    }
+
+    // Allow for Streamer to be swapped to later.
+    void SetActiveWeapon(Weapon newWeapon)
+    {
+        if (activeWeapon == newWeapon)
+            return;
+        else if (activeWeapon != null)
+            activeWeapon.gameObject.SetActive(false);
+        
+        activeWeapon = newWeapon;
+        newWeapon.gameObject.SetActive(true);
+
+        OnWeaponChanged?.Invoke(newWeapon);
     }
 
     void Update()
@@ -46,13 +62,7 @@ public class PlayerFire : MonoBehaviour
 
         if (Input.GetMouseButton(0) && canFireBurstWeapon)
         {
-            if (activeWeapon != shotgunWeapon)
-            {
-                activeWeapon.gameObject.SetActive(false);
-                activeWeapon = shotgunWeapon;
-                activeWeapon.gameObject.SetActive(true);
-            }
-
+            SetActiveWeapon(shotgunWeapon);
             PerformWeaponBurst(mousePosition, playerPosition);
         }
 
@@ -77,20 +87,9 @@ public class PlayerFire : MonoBehaviour
     {
         if (activate)
         {
-            if (activeWeapon != streamerWeapon)
-            {
-                if (activeWeapon != null)
-                    activeWeapon.gameObject.SetActive(false);
-                                
-                activeWeapon = streamerWeapon;
-                rb.velocity = Vector2.zero;
-            }
+            SetActiveWeapon(streamerWeapon);
 
-            if (!activeWeapon.gameObject.activeInHierarchy)
-                activeWeapon.gameObject.SetActive(true);
-            
-
-            
+            rb.velocity = Vector2.zero;
             Move(playerPos, mousePos);
             // AlternateMove(playerPos, mousePos);
         }
@@ -98,7 +97,7 @@ public class PlayerFire : MonoBehaviour
         else
         {
             activeWeapon.GetComponent<ParticleSystem>().Stop();
-            activeWeapon.gameObject.SetActive(false);            
+            activeWeapon.gameObject.SetActive(false);
         }
     }
 

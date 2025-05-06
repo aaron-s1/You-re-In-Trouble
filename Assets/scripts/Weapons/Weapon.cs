@@ -6,8 +6,13 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+
+public enum WeaponType { Streamer, Shotgun, Sniper }
+
+// CONSIDER MOVING PlayerFire.cs WEAPON CHECK LOGIC TO HERE.
 public class Weapon : MonoBehaviour
 {
+    public WeaponType weaponType;
     // [SerializeField] float pushForce = 0;
     [SerializeField] Transform subEmitterSpawnPoint;
     public Vector3 subEmitterSpawnPos;
@@ -19,7 +24,9 @@ public class Weapon : MonoBehaviour
 
     public float BurstForceMultiplier => burstSettings.burstForceMultiplier;
     public float BurstWeaponCooldown => burstSettings.burstWeaponCooldown;
+
     
+    public WeaponType opposingPlayerWeaponType;
 
     [Space(15)]
     [SerializeField] public bool isBurstWeapon;
@@ -27,20 +34,43 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] IsBurstWeapon burstSettings;
 
-    void Start()
+    void HandleWeaponChanged(Weapon newWeapon)
     {
-        if (subEmitterSpawnPoint != null)
-            subEmitterSpawnPos = subEmitterSpawnPoint.position;
-        // Debug.Log(GetComponentInChildren<ParticleSystem>());
-        // try
-        // {           
-            particles = GetComponentInChildren<ParticleSystem>();
-        // }
-        // catch (System.Exception)
-        // {
-        //     throw;
-        // }
-        // Debug.Log("weapon says its particle holder is: " + transform.GetChild(0).gameObject);
+        // if (newWeapon != this)
+            // return;
+
+        opposingPlayerWeaponType = newWeapon.weaponType;
+        Debug.Log("Weapon.cs saw opposing player weapon's type as: " + newWeapon.weaponType);
+    }
+
+    PlayerFire playerFire;
+    // For testing, multiple fake Players are in the scene, but only one has a PlayerFire that it can be controlled with.
+    // Adding a temporary dirty check to account for this.
+    void AddPlayerListener()
+    {
+        try
+        {
+            playerFire = transform.parent.parent.GetComponent<PlayerFire>();
+            playerFire.OnWeaponChanged += HandleWeaponChanged;
+        }
+        catch (System.Exception)
+        {
+            throw;
+        }
+    }
+
+    void Start() 
+    {
+        AddPlayerListener();
+        opposingPlayerWeaponType = WeaponType.Streamer;
+    }
+
+    // void OnEnable() =>
+        // AddPlayerListener();
+
+    void OnDisable() 
+    {        
+        playerFire.OnWeaponChanged -= HandleWeaponChanged;
     }
 
 
@@ -48,7 +78,7 @@ public class Weapon : MonoBehaviour
     public void PlayBurstParticles()
     {
         if (particles == null)
-            Debug.Log(gameObject.name + "found no particle system");
+            Debug.Log(gameObject.name + " found no particle system");
             
         GameObject weaponParticlesHolder = transform.GetChild(0).gameObject;
 
@@ -79,57 +109,44 @@ public class Weapon : MonoBehaviour
 
         void OnParticleTrigger()
         {
-            // received a particle.
+            // Player was hit by a particle.            
             ParticleSystem ps = GetComponent<ParticleSystem>();
             List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
             int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-
-            Debug.Log($"{ps.transform.parent?.name} was hit with a particle");
 
             for (int i = 0; i < numEnter; i++)
             {
                 ParticleSystem.Particle p = enter[i];
 
-                // Change direction
-                Debug.Log("should change direction");
-                Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right); // Or any direction
-
-                p.velocity = newDirection;
-
-                enter[i] = p; // Make sure to assign it back
+                HandleParticlePhysics(p);
+                enter[i] = p;
             }
 
-            // Apply changes
+            // Actually update the particle changes.
             ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
         }
 
-
-        // void OnParticleTrigger()
-        // {
-        //     Debug.Log($"{gameObject}'s particles touched something");
-        //     ParticleSystem ps = GetComponent<ParticleSystem>();
-        //     List<ParticleSystem.Particle> triggered = new List<ParticleSystem.Particle>();
-
-        //     int insideCount = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Inside, triggered);
-
-        //     for (int i = 0; i < insideCount; i++)
-        //     {
-        //         Debug.Log("I'm inside");
-        //         ParticleSystem.Particle p = triggered[i];
-
-        //         // Redirect particle (e.g., reflect or randomly deflect)
-        //         Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right * 100f); // Example
-        //         p.velocity = newDirection * p.velocity.magnitude * 100f;
-
-        //         // Optional: change color, size, lifetime to simulate reaction
-        //         // p.startColor = Color.cyan;
-        //         // p.remainingLifetime *= 0.8f;
-
-        //         triggered[i] = p;
-        //     }
-
-        //     ps.SetTriggerParticles(ParticleSystemTriggerEventType.Inside, triggered);
-        // }
+        // Needs testing. This should work just fine, but current setup makes testing too tricky.
+        // Revisit once this is actually needed.
+        void HandleParticlePhysics(ParticleSystem.Particle p)
+        {
+            switch (opposingPlayerWeaponType)
+            {
+                case WeaponType.Streamer:
+                    Debug.Log($"{gameObject} was hit with STREAMER particles");
+                    Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right);
+                    p.velocity = newDirection;
+                    break;
+                case WeaponType.Shotgun:
+                    Debug.Log($"{gameObject} was hit with SHOTGUN particles");
+                    // Add physics to opposing particles.
+                    break;
+                case WeaponType.Sniper:
+                    Debug.Log($"{gameObject} was hit with SNIPER particles");
+                    // Add physics to opposing particles.
+                    break;
+            }
+        }
 }
 
 
