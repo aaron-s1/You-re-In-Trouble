@@ -32,15 +32,21 @@ public class Weapon : MonoBehaviour
     [SerializeField] public bool isBurstWeapon;
 
 
+    public ParticleSystem enemyParticles;
+
+
     [SerializeField] IsBurstWeapon burstSettings;
 
-    void HandleWeaponChanged(Weapon newWeapon)
+    void HandleWeaponChanged(PlayerFire changingPlayer,Weapon newWeapon)
     {
+        if (changingPlayer == this.playerFire)
+            return;
         // if (newWeapon != this)
             // return;
 
         opposingPlayerWeaponType = newWeapon.weaponType;
         Debug.Log("Weapon.cs saw opposing player weapon's type as: " + newWeapon.weaponType);
+        FindEnemyParticles(newWeapon);
     }
 
     PlayerFire playerFire;
@@ -51,7 +57,7 @@ public class Weapon : MonoBehaviour
         try
         {
             playerFire = transform.parent.parent.GetComponent<PlayerFire>();
-            playerFire.OnWeaponChanged += HandleWeaponChanged;
+            PlayerFire.OnPlayerWeaponChanged += HandleWeaponChanged;
         }
         catch (System.Exception)
         {
@@ -63,14 +69,15 @@ public class Weapon : MonoBehaviour
     {
         AddPlayerListener();
         opposingPlayerWeaponType = WeaponType.Streamer;
+        // FindEnemyParticles(opposingPlayerWeaponType);
     }
 
-    // void OnEnable() =>
-        // AddPlayerListener();
+    void OnEnable() =>
+        AddPlayerListener();
 
     void OnDisable() 
     {        
-        playerFire.OnWeaponChanged -= HandleWeaponChanged;
+        PlayerFire.OnPlayerWeaponChanged -= HandleWeaponChanged;
     }
 
 
@@ -111,6 +118,7 @@ public class Weapon : MonoBehaviour
         {
             // Player was hit by a particle.            
             ParticleSystem ps = GetComponent<ParticleSystem>();
+            // ParticleSystem ps = enemyParticles;
             List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
             int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
 
@@ -126,10 +134,25 @@ public class Weapon : MonoBehaviour
             ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
         }
 
+        void FindEnemyParticles(Weapon enemyWeapon)
+        {
+            try
+            {
+                enemyParticles = enemyWeapon.gameObject.GetComponent<ParticleSystem>();
+                Debug.Log($"{gameObject.transform.parent.parent.gameObject} was hit. enemy particles are from ({enemyParticles.gameObject}) and came from {enemyParticles.gameObject.transform.parent.parent.transform.gameObject}");
+            }
+            catch (System.Exception)
+            {
+                enemyParticles = enemyWeapon.gameObject.GetComponentInChildren<ParticleSystem>();
+                Debug.Log($"{gameObject.transform.parent.parent.gameObject} was hit. enemy CHILD particles are from ({enemyParticles.gameObject}) and came from {enemyParticles.gameObject.transform.parent.parent.parent.transform.gameObject}");
+            }
+        }
+
         // Needs testing. This should work just fine, but current setup makes testing too tricky.
         // Revisit once this is actually needed.
         void HandleParticlePhysics(ParticleSystem.Particle p)
         {
+            Debug.Log($"{gameObject} collided with a Weapon. opposingPlayerWeaponType = {opposingPlayerWeaponType}.");
             switch (opposingPlayerWeaponType)
             {
                 case WeaponType.Streamer:
@@ -138,6 +161,7 @@ public class Weapon : MonoBehaviour
                     p.velocity = newDirection;
                     break;
                 case WeaponType.Shotgun:
+                    Debug.Break();
                     Debug.Log($"{gameObject} was hit with SHOTGUN particles");
                     // Add physics to opposing particles.
                     break;

@@ -4,8 +4,8 @@ using UnityEngine;
 // Also (currently?) handles recoil movement from Firing.
 public class PlayerFire : MonoBehaviour
 {
-    public delegate void WeaponChangedHandler(Weapon newWeapon);
-    public event WeaponChangedHandler OnWeaponChanged;
+    public delegate void WeaponChangedHandler(PlayerFire player, Weapon newWeapon);
+    public static event WeaponChangedHandler OnPlayerWeaponChanged;
 
     [SerializeField] GameObject streamerWeaponObject; // (perhaps make not actually a weapon (that damages) later)
     [SerializeField] GameObject shotgunWeaponObject;
@@ -52,7 +52,7 @@ public class PlayerFire : MonoBehaviour
         activeWeapon = newWeapon;
         newWeapon.gameObject.SetActive(true);
 
-        OnWeaponChanged?.Invoke(newWeapon);
+        OnPlayerWeaponChanged?.Invoke(this, newWeapon);
     }
 
     void Update()
