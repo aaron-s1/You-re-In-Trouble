@@ -12,15 +12,13 @@ public enum WeaponType { Streamer, Shotgun, Sniper }
 // CONSIDER MOVING PlayerFire.cs WEAPON CHECK LOGIC TO HERE.
 public class Weapon : MonoBehaviour
 {
+
+#region Variables.
     public WeaponType weaponType;
-    // [SerializeField] float pushForce = 0;
-    [SerializeField] Transform subEmitterSpawnPoint;
-    public Vector3 subEmitterSpawnPos;
 
     [Space(10)]
     [SerializeField] ParticleSystem particles;
     [SerializeField] AudioSource soundClip;
-
 
     public float BurstForceMultiplier => burstSettings.burstForceMultiplier;
     public float BurstWeaponCooldown => burstSettings.burstWeaponCooldown;
@@ -31,27 +29,21 @@ public class Weapon : MonoBehaviour
     [Space(15)]
     [SerializeField] public bool isBurstWeapon;
 
-
-    public ParticleSystem enemyParticles;
-
-
+    [Space(10)]
     [SerializeField] IsBurstWeapon burstSettings;
 
-    void HandleWeaponChanged(PlayerFire changingPlayer,Weapon newWeapon)
-    {
-        if (changingPlayer == this.playerFire)
-            return;
-        // if (newWeapon != this)
-            // return;
-
-        opposingPlayerWeaponType = newWeapon.weaponType;
-        Debug.Log("Weapon.cs saw opposing player weapon's type as: " + newWeapon.weaponType);
-        FindEnemyParticles(newWeapon);
-    }
-
     PlayerFire playerFire;
-    // For testing, multiple fake Players are in the scene, but only one has a PlayerFire that it can be controlled with.
-    // Adding a temporary dirty check to account for this.
+#endregion
+
+
+#region Listeners for Weapon changes.
+    void OnEnable() =>
+        AddPlayerListener();
+
+    void OnDisable() =>
+        PlayerFire.OnPlayerWeaponChanged -= HandleWeaponChanged;
+
+
     void AddPlayerListener()
     {
         try
@@ -64,24 +56,19 @@ public class Weapon : MonoBehaviour
             throw;
         }
     }
-
-    void Start() 
+ 
+    void HandleWeaponChanged(PlayerFire changingPlayer, Weapon newWeapon)
     {
-        AddPlayerListener();
-        opposingPlayerWeaponType = WeaponType.Streamer;
-        // FindEnemyParticles(opposingPlayerWeaponType);
+        if (changingPlayer == this.playerFire)
+            return;
+
+        opposingPlayerWeaponType = newWeapon.weaponType;
+        Debug.Log($"{changingPlayer.gameObject}'s HandleWeaponChanged() triggered. Weapon type is now: {newWeapon.weaponType}");
     }
-
-    void OnEnable() =>
-        AddPlayerListener();
-
-    void OnDisable() 
-    {        
-        PlayerFire.OnPlayerWeaponChanged -= HandleWeaponChanged;
-    }
+#endregion
 
 
-
+#region Particle playing.
     public void PlayBurstParticles()
     {
         if (particles == null)
@@ -101,103 +88,85 @@ public class Weapon : MonoBehaviour
     {
         yield return new WaitForSeconds(burstSettings.burstWeaponCooldown);
         Destroy(spawnedParticles);
+    }    
+#endregion
+
+
+#region Particle collisions.
+    void OnParticleTrigger()
+    {
+        ParticleSystem ps = GetComponent<ParticleSystem>();
+        List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
+        int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
+
+        for (int i = 0; i < numEnter; i++)
+        {
+            ParticleSystem.Particle p = enter[i];
+
+            HandleParticlePhysics(ref p);
+            enter[i] = p;
+        }
+
+        ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
     }
 
+    void HandleParticlePhysics(ref ParticleSystem.Particle p)
+    {
+        switch (this.weaponType)
+        {
+            case WeaponType.Streamer:
+                Debug.Log($"{gameObject} struck something with its STREAMER particles!");
+                Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right);
+                p.velocity = newDirection;
+                break;
 
-    #region Folds variables away for non-Streamer Weapon.
+            case WeaponType.Shotgun:
+                Debug.Log($"{gameObject} struck something with its SHOTGUN particles!");
+                break;
+
+            case WeaponType.Sniper:
+                Debug.Log($"{gameObject} struck something with its SNIPER particles!");
+                // Add physics to opposing particles.
+                break;
+        }
+    }
+#endregion
+
+
+#region Burst Weapon variables.
     [System.Serializable]
     internal class IsBurstWeapon
     {
         [SerializeField] internal float burstWeaponCooldown = 0;
         [SerializeField] internal float burstForceMultiplier = 1f;
     }
-
-    #endregion
-
-        void OnParticleTrigger()
-        {
-            // Player was hit by a particle.            
-            ParticleSystem ps = GetComponent<ParticleSystem>();
-            // ParticleSystem ps = enemyParticles;
-            List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
-            int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-
-            for (int i = 0; i < numEnter; i++)
-            {
-                ParticleSystem.Particle p = enter[i];
-
-                HandleParticlePhysics(p);
-                enter[i] = p;
-            }
-
-            // Actually update the particle changes.
-            ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-        }
-
-        void FindEnemyParticles(Weapon enemyWeapon)
-        {
-            try
-            {
-                enemyParticles = enemyWeapon.gameObject.GetComponent<ParticleSystem>();
-                Debug.Log($"{gameObject.transform.parent.parent.gameObject} was hit. enemy particles are from ({enemyParticles.gameObject}) and came from {enemyParticles.gameObject.transform.parent.parent.transform.gameObject}");
-            }
-            catch (System.Exception)
-            {
-                enemyParticles = enemyWeapon.gameObject.GetComponentInChildren<ParticleSystem>();
-                Debug.Log($"{gameObject.transform.parent.parent.gameObject} was hit. enemy CHILD particles are from ({enemyParticles.gameObject}) and came from {enemyParticles.gameObject.transform.parent.parent.parent.transform.gameObject}");
-            }
-        }
-
-        // Needs testing. This should work just fine, but current setup makes testing too tricky.
-        // Revisit once this is actually needed.
-        void HandleParticlePhysics(ParticleSystem.Particle p)
-        {
-            Debug.Log($"{gameObject} collided with a Weapon. opposingPlayerWeaponType = {opposingPlayerWeaponType}.");
-            switch (opposingPlayerWeaponType)
-            {
-                case WeaponType.Streamer:
-                    Debug.Log($"{gameObject} was hit with STREAMER particles");
-                    Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right);
-                    p.velocity = newDirection;
-                    break;
-                case WeaponType.Shotgun:
-                    Debug.Break();
-                    Debug.Log($"{gameObject} was hit with SHOTGUN particles");
-                    // Add physics to opposing particles.
-                    break;
-                case WeaponType.Sniper:
-                    Debug.Log($"{gameObject} was hit with SNIPER particles");
-                    // Add physics to opposing particles.
-                    break;
-            }
-        }
-}
-
-
-
-#region GUI for non-Streamer Weapon folding.
-[CustomEditor(typeof(Weapon))]
-public class WeaponEditor : Editor
-{
-    SerializedProperty isBurstWeapon;
-    SerializedProperty burstSettings;
-
-    void OnEnable()
-    {
-        isBurstWeapon = serializedObject.FindProperty("isBurstWeapon");
-        burstSettings = serializedObject.FindProperty("burstSettings");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        DrawPropertiesExcluding(serializedObject, "burstSettings");
-
-        if (isBurstWeapon.boolValue)
-            EditorGUILayout.PropertyField(burstSettings, true);
-
-        serializedObject.ApplyModifiedProperties();
-    }
-}
 #endregion
+
+
+#region Folds variables away if Weapon is not of type Streamer.
+    [CustomEditor(typeof(Weapon))]
+    public class WeaponEditor : Editor
+    {
+        SerializedProperty isBurstWeapon;
+        SerializedProperty burstSettings;
+
+        void OnEnable()
+        {
+            isBurstWeapon = serializedObject.FindProperty("isBurstWeapon");
+            burstSettings = serializedObject.FindProperty("burstSettings");
+        }
+
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
+
+            DrawPropertiesExcluding(serializedObject, "burstSettings");
+
+            if (isBurstWeapon.boolValue)
+                EditorGUILayout.PropertyField(burstSettings, true);
+
+            serializedObject.ApplyModifiedProperties();
+        }
+    }
+#endregion
+}
