@@ -33,12 +33,17 @@ public class Weapon : MonoBehaviour
     [SerializeField] IsBurstWeapon burstSettings;
 
     PlayerFire playerFire;
+
+    GameObject thisPlayer;
+
 #endregion
 
 
 #region Listeners for Weapon changes.
-    void OnEnable() =>
+    void OnEnable() {
         AddPlayerListener();
+        thisPlayer = gameObject.transform.parent.parent.gameObject;
+    }
 
     void OnDisable() =>
         PlayerFire.OnPlayerWeaponChanged -= HandleWeaponChanged;
@@ -95,12 +100,22 @@ public class Weapon : MonoBehaviour
 
 #region Particle collisions.
 
+    
+
+    // Weapon hit other Player directly.
     void OnParticleCollision(GameObject otherPlayer)
-    {        
-        if (otherPlayer.tag == "Player2")
-            Debug.Log($"{gameObject.transform.parent.parent.gameObject}'s REGULAR collider hit Player2");
+    {
+        if (otherPlayer == thisPlayer)
+            return;
+
+        // Handle damage here.
+        else if (otherPlayer.tag == "Player1" || otherPlayer.tag == "Player2")
+            Debug.Log($"{gameObject.transform.parent.parent.gameObject}'s REGULAR collider hit {otherPlayer}");
     }
 
+
+    // Weapon hit other Player's weapon.
+    // This is what should handle physics pushing between players.
     void OnParticleTrigger()
     {
         ParticleSystem ps = GetComponent<ParticleSystem>();
