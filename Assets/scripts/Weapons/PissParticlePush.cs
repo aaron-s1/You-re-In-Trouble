@@ -24,15 +24,15 @@ public class PissParticlePush : MonoBehaviour
         //     return;
         // }
 
-        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+        // Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
 
-        if (rb != null)
-        {
-            Debug.Log($"{gameObject}'s pissing particles hit {other}'s rigidbody");
+        // if (rb != null)
+        // {
+        //     Debug.Log($"{gameObject}'s pissing particles hit {other}'s rigidbody");
 
-            Vector2 forceDirection = (other.transform.position - transform.position).normalized;
+        //     Vector2 forceDirection = (other.transform.position - transform.position).normalized;
             
-            rb.AddForce(forceDirection * pushForce, ForceMode2D.Force);
-        }
+        //     rb.AddForce(forceDirection * pushForce, ForceMode2D.Force);
+        // }
     }
 }

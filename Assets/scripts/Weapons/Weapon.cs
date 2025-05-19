@@ -72,14 +72,15 @@ public class Weapon : MonoBehaviour
     public void PlayBurstParticles()
     {
         if (particles == null)
-            Debug.Log(gameObject.name + " found no particle system");
-            
+            Debug.Log(gameObject.name + " found no particle system!!");
+        
+        // Review this all later and see if having Shotgun's particles on a child is even necessary
         GameObject weaponParticlesHolder = transform.GetChild(0).gameObject;
 
         GameObject newParticlesHolder = Instantiate(weaponParticlesHolder, weaponParticlesHolder.transform.position, weaponParticlesHolder.transform.rotation);
-        newParticlesHolder.transform.parent = gameObject.transform;
+            newParticlesHolder.transform.parent = gameObject.transform;
         newParticlesHolder.GetComponent<ParticleSystem>().Play();
-        newParticlesHolder.transform.parent = null;
+            newParticlesHolder.transform.parent = null;
 
         StartCoroutine(DeleteParticles(newParticlesHolder));
     }
@@ -93,6 +94,13 @@ public class Weapon : MonoBehaviour
 
 
 #region Particle collisions.
+
+    void OnParticleCollision(GameObject otherPlayer)
+    {        
+        if (otherPlayer.tag == "Player2")
+            Debug.Log($"{gameObject.transform.parent.parent.gameObject}'s REGULAR collider hit Player2");
+    }
+
     void OnParticleTrigger()
     {
         ParticleSystem ps = GetComponent<ParticleSystem>();
@@ -115,18 +123,17 @@ public class Weapon : MonoBehaviour
         switch (this.weaponType)
         {
             case WeaponType.Streamer:
-                Debug.Log($"{gameObject} struck something with its STREAMER particles!");
+                Debug.Log($"{gameObject}'s TRIGGER struck something with its STREAMER particles!");
                 Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right);
                 p.velocity = newDirection;
                 break;
 
             case WeaponType.Shotgun:
-                Debug.Log($"{gameObject} struck something with its SHOTGUN particles!");
+                Debug.Log($"{gameObject} TRIGGER struck something with its SHOTGUN particles!");
                 break;
 
             case WeaponType.Sniper:
-                Debug.Log($"{gameObject} struck something with its SNIPER particles!");
-                // Add physics to opposing particles.
+                Debug.Log($"{gameObject} TRIGGER struck something with its SNIPER particles!");
                 break;
         }
     }
