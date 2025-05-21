@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+// using CodeMonkey.HealthSystemCM;
 
 
 public enum WeaponType { Streamer, Shotgun, Sniper }
@@ -32,6 +33,8 @@ public class Weapon : MonoBehaviour
     [Space(10)]
     [SerializeField] IsBurstWeapon burstSettings;
 
+    // HealthSystem healthSystem;
+
     PlayerFire playerFire;
 
     GameObject thisPlayer;
@@ -43,6 +46,7 @@ public class Weapon : MonoBehaviour
     void OnEnable() {
         AddPlayerListener();
         thisPlayer = gameObject.transform.parent.parent.gameObject;
+        // healthSystem = new HealthSystem(100);
     }
 
     void OnDisable() =>
@@ -100,9 +104,7 @@ public class Weapon : MonoBehaviour
 
 #region Particle collisions.
 
-    
-
-    // Weapon hit other Player directly.
+    // Weapon hit other Player DIRECTLY.
     void OnParticleCollision(GameObject otherPlayer)
     {
         if (otherPlayer == thisPlayer)
@@ -110,12 +112,16 @@ public class Weapon : MonoBehaviour
 
         // Handle damage here.
         else if (otherPlayer.tag == "Player1" || otherPlayer.tag == "Player2")
+        {
             Debug.Log($"{gameObject.transform.parent.parent.gameObject}'s REGULAR collider hit {otherPlayer}");
+            otherPlayer.GetComponent<PlayerFire>().Damage(0.05f);
+            // otherPlayer.transform.GetChild(0).transform.GetChild(0).gameObject.Damage(1);
+        }
     }
 
 
-    // Weapon hit other Player's weapon.
-    // This is what should handle physics pushing between players.
+    // Weapon hit other player's Weapon.
+    // Determine how particles interact with other player's Weapon here.
     void OnParticleTrigger()
     {
         ParticleSystem ps = GetComponent<ParticleSystem>();
@@ -152,6 +158,10 @@ public class Weapon : MonoBehaviour
                 break;
         }
     }
+
+    // public void Damage(float damage) =>
+    //     healthSystem.Damage(damage);
+
 #endregion
 
 
