@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
+using CodeMonkey.HealthSystemCM;
+
 
 namespace CodeMonkey.HealthSystemCM {
-
-    /// <summary>
-    /// Adds a HealthSystem to a Game Object
-    /// </summary>
-    public class HealthSystemComponent : MonoBehaviour, IGetHealthSystem {
+    public class HealthSystemComponent : MonoBehaviour, IGetHealthSystem
+    {
 
         [Tooltip("Maximum Health amount")]
         [SerializeField] private float healthAmountMax = 100f;
@@ -17,22 +16,19 @@ namespace CodeMonkey.HealthSystemCM {
 
 
         private void Awake() {
-            // Create Health System
             healthSystem = new HealthSystem(healthAmountMax);
 
-            if (startingHealthAmount != 0) {
+            if (startingHealthAmount != 0)
                 healthSystem.SetHealth(startingHealthAmount);
-            }
         }
 
         /// <summary>
         /// Get the Health System created by this Component
         /// </summary>
-        public HealthSystem GetHealthSystem() {
-            return healthSystem;
-        }
+        public HealthSystem GetHealthSystem() => healthSystem;
 
-
+        public void Damage(float amount) =>
+            healthSystem.Damage(amount);
     }
 
 }

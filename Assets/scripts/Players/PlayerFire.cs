@@ -3,7 +3,7 @@ using UnityEngine;
 using CodeMonkey.HealthSystemCM;
 
 // Also (currently?) handles recoil movement from Firing.
-public class PlayerFire : MonoBehaviour, IGetHealthSystem
+public class PlayerFire : MonoBehaviour
 {
     public delegate void WeaponChangedHandler(PlayerFire player, Weapon newWeapon);
     public static event WeaponChangedHandler OnPlayerWeaponChanged;
@@ -29,25 +29,21 @@ public class PlayerFire : MonoBehaviour, IGetHealthSystem
 
     public bool sniperWeaponTest;
 
+// #region Health stuff here temporarily.
+    // HealthSystem healthSystem;
+    // public void Damage(float amount) =>
+    //     healthSystem.Damage(amount);
 
-    HealthSystem healthSystem;
-    public void Damage(float amount)
-    {
-        Debug.Log($"{gameObject} received {amount} damage");
-        Debug.Log($"new health = {healthSystem.GetHealth()}");
-        healthSystem.Damage(amount);
-    }
+    // public HealthSystem GetHealthSystem() =>
+        // healthSystem;
 
-    public HealthSystem GetHealthSystem()
-    {
-        return healthSystem;
-    }
+// #endregion
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        healthSystem = new HealthSystem(100);
+        // healthSystem = new HealthSystem(100);
 
         streamerWeapon = streamerWeaponObject.GetComponent<Weapon>();
         shotgunWeapon = shotgunWeaponObject.GetComponent<Weapon>();
