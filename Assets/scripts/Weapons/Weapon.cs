@@ -18,6 +18,7 @@ public class Weapon : MonoBehaviour
     public WeaponType weaponType;
 
     [Space(10)]
+    [SerializeField] float damageTickAmount = 0.05f;
     [SerializeField] ParticleSystem particles;
     [SerializeField] AudioSource soundClip;
 
@@ -63,6 +64,7 @@ public class Weapon : MonoBehaviour
         }
         catch (System.Exception)
         {
+            Debug.Log("AddPlayerListener() failed!");
             throw;
         }
     }
@@ -105,22 +107,20 @@ public class Weapon : MonoBehaviour
 
 #region Particle collisions.
 
-    // Weapon hit other Player DIRECTLY.
+    List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
+
+    // Weapon's particle hit other Player DIRECTLY.
     void OnParticleCollision(GameObject otherPlayer)
     {
         if (otherPlayer == thisPlayer)
             return;
 
-        if (opposingPlayerHealth == null)
-            opposingPlayerHealth = otherPlayer.GetComponent<HealthSystemComponent>();
-        
-        opposingPlayerHealth.Damage(0.05f);
 
         // Handle damage here.
         if (otherPlayer.tag == "Player1" || otherPlayer.tag == "Player2")
         {
             Debug.Log($"{gameObject.transform.parent.parent.gameObject}'s REGULAR collider hit {otherPlayer}");
-
+            ParticleApplyDamage(otherPlayer);
         }
     }
 
@@ -144,6 +144,34 @@ public class Weapon : MonoBehaviour
         ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
     }
 
+    void ParticleApplyDamage(GameObject otherPlayer)
+    {
+        if (opposingPlayerHealth == null)
+            try
+            {
+                opposingPlayerHealth = otherPlayer.GetComponent<HealthSystemComponent>();
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        // Debug.Log("opposing player health = " + opposingPlayerHealth);
+
+
+        int numCollisionEvents = ParticlePhysicsExtensions.GetCollisionEvents(GetComponent<ParticleSystem>(), otherPlayer, collisionEvents);
+        if (numCollisionEvents == 0)
+            return;
+
+        // Debug.Log("col events = " + numCollisionEvents);
+
+        float velocityDamageMultiplier = collisionEvents[0].velocity.magnitude;
+        // Debug.Log("VELOCITY MULTIPLIER = " + velocityDamageMultiplier);
+
+        float totalDamage = damageTickAmount * velocityDamageMultiplier;
+        // float totalDamage = 0.1f;
+        opposingPlayerHealth.Damage(totalDamage);
+    }
+
     void HandleParticlePhysics(ref ParticleSystem.Particle p)
     {
         switch (this.weaponType)
@@ -155,7 +183,7 @@ public class Weapon : MonoBehaviour
                 break;
 
             case WeaponType.Shotgun:
-                Debug.Log($"{gameObject} TRIGGER struck something with its SHOTGUN particles!");
+                Debug.Log($"{gameObject} TRIGGER struck something with its SHOTGUN particles!");                
                 break;
 
             case WeaponType.Sniper:

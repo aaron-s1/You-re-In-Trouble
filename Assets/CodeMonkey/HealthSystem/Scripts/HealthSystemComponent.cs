@@ -27,8 +27,11 @@ namespace CodeMonkey.HealthSystemCM {
         /// </summary>
         public HealthSystem GetHealthSystem() => healthSystem;
 
-        public void Damage(float amount) =>
+        public void Damage(float amount) 
+        {
+            Debug.Log("damage??");
             healthSystem.Damage(amount);
+        }
     }
 
 }
