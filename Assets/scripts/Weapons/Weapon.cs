@@ -18,7 +18,7 @@ public class Weapon : MonoBehaviour
     public WeaponType weaponType;
 
     [Space(10)]
-    [SerializeField] float damageTickAmount = 0.05f;
+    [SerializeField] float particleDamage = 0.05f;
     [SerializeField] ParticleSystem particles;
     [SerializeField] AudioSource soundClip;
 
@@ -84,20 +84,20 @@ public class Weapon : MonoBehaviour
     public void PlayBurstParticles()
     {
         if (particles == null)
-            Debug.Log(gameObject.name + " found no particle system!!");
+            Debug.Log($"{gameObject} found no particle system!!");
         
-        // Review this all later and see if having Shotgun's particles on a child is even necessary
         GameObject weaponParticlesHolder = transform.GetChild(0).gameObject;
 
-        GameObject newParticlesHolder = Instantiate(weaponParticlesHolder, weaponParticlesHolder.transform.position, weaponParticlesHolder.transform.rotation);
-            newParticlesHolder.transform.parent = gameObject.transform;
-        newParticlesHolder.GetComponent<ParticleSystem>().Play();
-            newParticlesHolder.transform.parent = null;
+        // Clean up later:
+            GameObject newParticlesHolder = Instantiate(weaponParticlesHolder, weaponParticlesHolder.transform.position, weaponParticlesHolder.transform.rotation);
+                newParticlesHolder.transform.parent = gameObject.transform;
+            newParticlesHolder.GetComponent<ParticleSystem>().Play();
+                newParticlesHolder.transform.parent = null;
 
-        StartCoroutine(DeleteParticles(newParticlesHolder));
+        StartCoroutine(DeleteBurstWeaponParticles(newParticlesHolder));
     }
 
-    IEnumerator DeleteParticles(GameObject spawnedParticles)
+    IEnumerator DeleteBurstWeaponParticles(GameObject spawnedParticles)
     {
         yield return new WaitForSeconds(burstSettings.burstWeaponCooldown);
         Destroy(spawnedParticles);
@@ -109,24 +109,19 @@ public class Weapon : MonoBehaviour
 
     List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
 
-    // Weapon's particle hit other Player DIRECTLY.
+    // Weapon's particle hit other Player DIRECTLY!!.
     void OnParticleCollision(GameObject otherPlayer)
     {
         if (otherPlayer == thisPlayer)
             return;
 
-
-        // Handle damage here.
         if (otherPlayer.tag == "Player1" || otherPlayer.tag == "Player2")
-        {
-            Debug.Log($"{gameObject.transform.parent.parent.gameObject}'s REGULAR collider hit {otherPlayer}");
-            ParticleApplyDamage(otherPlayer);
-        }
+            ParticlesApplyDamage(otherPlayer);
     }
 
 
-    // Weapon hit other player's Weapon.
-    // Determine how particles interact with other player's Weapon here.
+    // Weapon hit OTHER player's Weapon!!
+    // For determining what Weapon's particles do when hitting other player's Weapon's trigger (NOT its particles!!)
     void OnParticleTrigger()
     {
         ParticleSystem ps = GetComponent<ParticleSystem>();
@@ -144,7 +139,7 @@ public class Weapon : MonoBehaviour
         ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
     }
 
-    void ParticleApplyDamage(GameObject otherPlayer)
+    void ParticlesApplyDamage(GameObject otherPlayer)
     {
         if (opposingPlayerHealth == null)
             try
@@ -153,22 +148,18 @@ public class Weapon : MonoBehaviour
             }
             catch (System.Exception)
             {
+                Debug.Log($"{gameObject} found no enemy Health System!!!");
                 throw;
             }
-        // Debug.Log("opposing player health = " + opposingPlayerHealth);
 
-
+        // find particle's generic velocity to create another damage factor
         int numCollisionEvents = ParticlePhysicsExtensions.GetCollisionEvents(GetComponent<ParticleSystem>(), otherPlayer, collisionEvents);
         if (numCollisionEvents == 0)
             return;
-
-        // Debug.Log("col events = " + numCollisionEvents);
-
         float velocityDamageMultiplier = collisionEvents[0].velocity.magnitude;
-        // Debug.Log("VELOCITY MULTIPLIER = " + velocityDamageMultiplier);
 
-        float totalDamage = damageTickAmount * velocityDamageMultiplier;
-        // float totalDamage = 0.1f;
+
+        float totalDamage = particleDamage * velocityDamageMultiplier;
         opposingPlayerHealth.Damage(totalDamage);
     }
 
@@ -191,10 +182,6 @@ public class Weapon : MonoBehaviour
                 break;
         }
     }
-
-    // public void Damage(float damage) =>
-    //     healthSystem.Damage(damage);
-
 #endregion
 
 

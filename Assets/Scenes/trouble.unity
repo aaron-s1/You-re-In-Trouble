@@ -212,7 +212,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.15312195, y: 0.0280056}
+  m_Offset: {x: 0.40638733, y: 0.0280056}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -223,7 +223,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.1403503, y: 3.5248046}
+  m_Size: {x: 0.8024597, y: 3.5248046}
   m_EdgeRadius: 0
 --- !u!1 &198816600 stripped
 GameObject:
@@ -11148,18 +11148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deadZoneTurnRadius: 1
---- !u!114 &830181372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830181362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcba6b3e852ecd3478cee70382862251, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &837910546
 GameObject:
   m_ObjectHideFlags: 0
@@ -11920,7 +11908,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2586040851862992125, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2828523091163985552, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_Layer
@@ -12004,7 +11992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410533116008587884, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: damageTickAmount
-      value: 0.01
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6410533116008587884, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: subEmitterSpawnPoint
@@ -12024,7 +12012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7162760500130087858, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Player2Piss
       objectReference: {fileID: 0}
     - target: {fileID: 7162760500130087861, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_RenderMode
@@ -12080,7 +12068,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7162760500130087866, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: CollisionModule.collidesWithDynamic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7162760500130087866, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: TriggerModule.primitives.Array.size
@@ -12727,8 +12715,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2317618872172862592, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2489166
+      objectReference: {fileID: 0}
+    - target: {fileID: 2317618872172862592, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: m_Size.y
+      value: 0.37963068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2317618872172862592, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2317618872172862592, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.12445831
+      objectReference: {fileID: 0}
+    - target: {fileID: 2317618872172862592, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.0048910975
       objectReference: {fileID: 0}
     - target: {fileID: 2317618872172862593, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_BodyType
@@ -12744,7 +12748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2317618872172862598, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -217.5
+      value: -212.3
       objectReference: {fileID: 0}
     - target: {fileID: 2317618872172862598, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12896,7 +12900,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410533116008587884, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: damageTickAmount
-      value: 0.01
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6410533116008587884, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: subEmitterSpawnPoint
