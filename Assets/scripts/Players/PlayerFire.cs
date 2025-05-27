@@ -114,7 +114,9 @@ public class PlayerFire : MonoBehaviour
         if (!activeWeapon.isBurstWeapon)
             return;
 
-        activeWeapon.PlayBurstParticles();
+        // activeWeapon.GetCompomnent<Weapon>().StartCoroutine(PlayBurstParticles());
+        StartCoroutine(activeWeapon.PlayBurstParticles());
+
         // Debug.Break();
         ApplyBurstMovement(mousePosition, playerPosition);
 

@@ -82,53 +82,17 @@ public class Weapon : MonoBehaviour
 
 
 #region Particle playing.
-public void PlayBurstParticles()
-            {
-            // ParticleSystem original = GetComponent<ParticleSystem>();
-
-            // Clone just the ParticleSystem component, not the full GameObject
-            // GameObject newGO = new GameObject("Duplicate Shotgun Particles");
-            // ParticleSystem psCopy = Instantiate(original, newGO.transform);
-            // psCopy.transform.position = transform.position;
-            // psCopy.transform.rotation = transform.rotation;
-            particles.Stop();
-            particles.Play();            
-            // StartCoroutine(DeleteBurstWeaponParticles(newGO, psCopy.main.duration));
-            }
-
     // public void PlayBurstParticles()
     // {
-    //     // return;
-    //     // Debug.Log("should not be reached");        
-    //     if (particles == null)
-    //         Debug.Log($"{gameObject} found no particle system!!");
-    //     // Debug.Break();
-        
-    //     ParticleSystem newParticleShot = GetComponent<ParticleSystem>();
-
-    //     // GameObject weaponParticlesHolder = transform.GetChild(0).gameObject;
-    //     GameObject newParticlesHolder = Instantiate (new GameObject(), transform.position, transform.rotation);
-    //     Debug.Log("NAME::" + newParticlesHolder.name);
-    //     newParticlesHolder.SetActive(true);
-    //     newParticlesHolder.name = "Duplicate Shotgun Particles";
-
-    //     ParticleSystem duplicateParticles = Instantiate(GetComponent<ParticleSystem>(), newParticlesHolder.transform.position, newParticlesHolder.transform.rotation);
-    //     newParticlesHolder.GetComponent<ParticleSystem>().Play();
-
-    //     // Debug.Break();
-
-    //     StartCoroutine(DeleteBurstWeaponParticles(newParticlesHolder));
+    //     particles.Play();
     // }
-// IEnumerator DeleteBurstWeaponParticles(GameObject go, float delay)
-// {
-//     yield return new WaitForSeconds(delay);
-//     Destroy(go);
-// }
-    IEnumerator DeleteBurstWeaponParticles(ParticleSystem particless)
+ 
+    public IEnumerator PlayBurstParticles()//ParticleSystem particless)
     {
+        particles.Stop();
+        particles.Play();
         yield return new WaitForSeconds(burstSettings.burstWeaponCooldown);
-        particless.Stop();
-        // Destroy(particlesHolder);
+        particles.Stop();
     }    
 #endregion
 
