@@ -115,6 +115,7 @@ public class PlayerFire : MonoBehaviour
             return;
 
         activeWeapon.PlayBurstParticles();
+        // Debug.Break();
         ApplyBurstMovement(mousePosition, playerPosition);
 
         canFireBurstWeapon = false;

@@ -48,6 +48,7 @@ public class Weapon : MonoBehaviour
     void OnEnable() {
         AddPlayerListener();
         thisPlayer = gameObject.transform.parent.parent.gameObject;
+        particles = GetComponent<ParticleSystem>();
         // healthSystem = new HealthSystem(100);
     }
 
@@ -81,26 +82,53 @@ public class Weapon : MonoBehaviour
 
 
 #region Particle playing.
-    public void PlayBurstParticles()
-    {
-        if (particles == null)
-            Debug.Log($"{gameObject} found no particle system!!");
+public void PlayBurstParticles()
+            {
+            // ParticleSystem original = GetComponent<ParticleSystem>();
+
+            // Clone just the ParticleSystem component, not the full GameObject
+            // GameObject newGO = new GameObject("Duplicate Shotgun Particles");
+            // ParticleSystem psCopy = Instantiate(original, newGO.transform);
+            // psCopy.transform.position = transform.position;
+            // psCopy.transform.rotation = transform.rotation;
+            particles.Stop();
+            particles.Play();            
+            // StartCoroutine(DeleteBurstWeaponParticles(newGO, psCopy.main.duration));
+            }
+
+    // public void PlayBurstParticles()
+    // {
+    //     // return;
+    //     // Debug.Log("should not be reached");        
+    //     if (particles == null)
+    //         Debug.Log($"{gameObject} found no particle system!!");
+    //     // Debug.Break();
         
-        GameObject weaponParticlesHolder = transform.GetChild(0).gameObject;
+    //     ParticleSystem newParticleShot = GetComponent<ParticleSystem>();
 
-        // Clean up later:
-            GameObject newParticlesHolder = Instantiate(weaponParticlesHolder, weaponParticlesHolder.transform.position, weaponParticlesHolder.transform.rotation);
-                newParticlesHolder.transform.parent = gameObject.transform;
-            newParticlesHolder.GetComponent<ParticleSystem>().Play();
-                newParticlesHolder.transform.parent = null;
+    //     // GameObject weaponParticlesHolder = transform.GetChild(0).gameObject;
+    //     GameObject newParticlesHolder = Instantiate (new GameObject(), transform.position, transform.rotation);
+    //     Debug.Log("NAME::" + newParticlesHolder.name);
+    //     newParticlesHolder.SetActive(true);
+    //     newParticlesHolder.name = "Duplicate Shotgun Particles";
 
-        StartCoroutine(DeleteBurstWeaponParticles(newParticlesHolder));
-    }
+    //     ParticleSystem duplicateParticles = Instantiate(GetComponent<ParticleSystem>(), newParticlesHolder.transform.position, newParticlesHolder.transform.rotation);
+    //     newParticlesHolder.GetComponent<ParticleSystem>().Play();
 
-    IEnumerator DeleteBurstWeaponParticles(GameObject spawnedParticles)
+    //     // Debug.Break();
+
+    //     StartCoroutine(DeleteBurstWeaponParticles(newParticlesHolder));
+    // }
+// IEnumerator DeleteBurstWeaponParticles(GameObject go, float delay)
+// {
+//     yield return new WaitForSeconds(delay);
+//     Destroy(go);
+// }
+    IEnumerator DeleteBurstWeaponParticles(ParticleSystem particless)
     {
         yield return new WaitForSeconds(burstSettings.burstWeaponCooldown);
-        Destroy(spawnedParticles);
+        particless.Stop();
+        // Destroy(particlesHolder);
     }    
 #endregion
 

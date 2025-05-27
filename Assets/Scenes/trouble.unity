@@ -477,7 +477,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -6060,7 +6060,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -12716,7 +12716,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2317618872172862592, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_Size.x
-      value: 1.2489166
+      value: 0.87368774
       objectReference: {fileID: 0}
     - target: {fileID: 2317618872172862592, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_Size.y
@@ -12728,7 +12728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2317618872172862592, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_Offset.x
-      value: -0.12445831
+      value: 0.06315613
       objectReference: {fileID: 0}
     - target: {fileID: 2317618872172862592, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_Offset.y
