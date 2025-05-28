@@ -4125,7 +4125,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     type: 1
     collisionMode: 1
@@ -4137,7 +4137,7 @@ ParticleSystem:
     m_Dampen:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4190,7 +4190,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4298,7 +4298,7 @@ ParticleSystem:
     radiusScale: 0.15
     collidesWith:
       serializedVersion: 2
-      m_Bits: 640
+      m_Bits: 128
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
@@ -9708,7 +9708,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     type: 1
     collisionMode: 1
@@ -9720,7 +9720,7 @@ ParticleSystem:
     m_Dampen:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -9773,7 +9773,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -9881,7 +9881,7 @@ ParticleSystem:
     radiusScale: 0.15
     collidesWith:
       serializedVersion: 2
-      m_Bits: 640
+      m_Bits: 64
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
@@ -11904,11 +11904,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2586040851862992125, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2586040851862992125, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2586040851862992125, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: m_TagString
+      value: Player2Piss
       objectReference: {fileID: 0}
     - target: {fileID: 2828523091163985552, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_Layer
@@ -12827,8 +12831,16 @@ PrefabInstance:
       value: PLAYER 1 SHOTGUN
       objectReference: {fileID: 0}
     - target: {fileID: 2586040851862992125, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2586040851862992125, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2586040851862992125, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: m_TagString
+      value: Player1Piss
       objectReference: {fileID: 0}
     - target: {fileID: 3632803234773462950, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: lengthInSec
