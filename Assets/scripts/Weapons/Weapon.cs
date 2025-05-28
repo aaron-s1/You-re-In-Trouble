@@ -82,12 +82,7 @@ public class Weapon : MonoBehaviour
 
 
 #region Particle playing.
-    // public void PlayBurstParticles()
-    // {
-    //     particles.Play();
-    // }
- 
-    public IEnumerator PlayBurstParticles()//ParticleSystem particless)
+    public IEnumerator PlayBurstParticles()
     {
         particles.Stop();
         particles.Play();

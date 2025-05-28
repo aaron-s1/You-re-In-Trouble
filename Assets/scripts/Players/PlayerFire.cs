@@ -79,12 +79,19 @@ public class PlayerFire : MonoBehaviour
     void SetActiveWeapon(Weapon newWeapon)
     {
         if (activeWeapon == newWeapon)
-            return;
+        {
+            if (!activeWeapon.gameObject.activeSelf)
+                activeWeapon.gameObject.SetActive(true);
+            else
+                return;
+        }
+
         else if (activeWeapon != null)
             activeWeapon.gameObject.SetActive(false);
         
         activeWeapon = newWeapon;
-        newWeapon.gameObject.SetActive(true);
+        activeWeapon.gameObject.SetActive(true);
+        // activeWeapon.gameObject.SetActive(true);
 
         OnPlayerWeaponChanged?.Invoke(this, newWeapon);
     }
@@ -97,7 +104,7 @@ public class PlayerFire : MonoBehaviour
             SetActiveWeapon(streamerWeapon);
 
             rb.velocity = Vector2.zero;
-            Move(playerPos, mousePos);
+            MovePlayer(playerPos, mousePos);
             // AlternateMove(playerPos, mousePos);
         }
         
@@ -148,7 +155,7 @@ public class PlayerFire : MonoBehaviour
             // rb.AddForce(pushDirection * pushForce * burstForceMultiplier * forceMultiplier, ForceMode2D.Impulse);
     }
 
-    void Move(Vector2 playerPos, Vector2 mousePos)
+    void MovePlayer(Vector2 playerPos, Vector2 mousePos)
     {
         Vector2 pushDirection = (playerPos - mousePos).normalized;
         rb.AddForce(pushDirection * pushForce * streamerPushForceCoefficient, ForceMode2D.Impulse);
