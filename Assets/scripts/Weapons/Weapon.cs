@@ -103,7 +103,10 @@ public class Weapon : MonoBehaviour
             return;
 
         if (otherPlayer.tag == "Player1" || otherPlayer.tag == "Player2")
+        {
+            Debug.Log($"{gameObject}'s {weaponType} DIRECTLY hit {otherPlayer}!");
             ParticlesApplyDamage(otherPlayer);
+        }
     }
 
 
@@ -152,16 +155,19 @@ public class Weapon : MonoBehaviour
 
     void HandleParticlePhysics(ref ParticleSystem.Particle p)
     {
+        Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right);
         switch (this.weaponType)
         {
             case WeaponType.Streamer:
                 Debug.Log($"{gameObject}'s TRIGGER struck something with its STREAMER particles!");
-                Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right);
+                // Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right);
                 p.velocity = newDirection;
                 break;
 
             case WeaponType.Shotgun:
-                Debug.Log($"{gameObject} TRIGGER struck something with its SHOTGUN particles!");                
+                Debug.Log($"{gameObject} TRIGGER struck something with its SHOTGUN particles!");
+                // Vector3 newDirection = Vector3.Reflect(p.velocity, Vector3.right);
+                p.velocity = newDirection;
                 break;
 
             case WeaponType.Sniper:
