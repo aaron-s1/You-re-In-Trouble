@@ -18,8 +18,6 @@ public class PlayerFire : MonoBehaviour
     [SerializeField] GameObject shotgunWeaponObject;
     [SerializeField] GameObject sniperWeaponObject;
 
-    [SerializeField] Texture2D sniperCursor;
-
     public Weapon activeWeapon; // temp  public.
     Weapon streamerWeapon;
     Weapon shotgunWeapon;
@@ -34,6 +32,8 @@ public class PlayerFire : MonoBehaviour
 
     public bool sniperWeaponTest;
 
+    CursorSetter cursorSetter;
+
 #endregion
 
     void Start()
@@ -42,6 +42,7 @@ public class PlayerFire : MonoBehaviour
 
         streamerWeapon = streamerWeaponObject.GetComponent<Weapon>();
         shotgunWeapon = shotgunWeaponObject.GetComponent<Weapon>();
+        cursorSetter = GetComponent<CursorSetter>();
 
         // Add a default weapon.
         SetActiveWeapon(streamerWeapon);
@@ -49,11 +50,12 @@ public class PlayerFire : MonoBehaviour
 
     void Update()
     {
+        
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 playerPosition = rb.position;
 
         if (Input.GetMouseButton(0) && canFireBurstWeapon)
-        {
+        {            
             SetActiveWeapon(shotgunWeapon);
             PerformWeaponBurst(mousePosition, playerPosition);
         }
@@ -64,14 +66,7 @@ public class PlayerFire : MonoBehaviour
         if (Input.GetMouseButtonUp(1))
             ActivateStreamer(false, playerPosition, mousePosition);
 
-        if (sniperWeaponTest)
-        {
-            // activeWeapon = sniperWeapon;
-            sniperWeaponTest = false;
-            gameObject.GetComponent<CursorSetter>().hasSniperWeapon = true;
-        }
-
-        // ActivateSniperCursor();
+        cursorSetter.SetCursor(sniperWeaponTest);
     }
 
 
@@ -183,11 +178,7 @@ public class PlayerFire : MonoBehaviour
     //     // Pass 'null' to the texture parameter to use the default system cursor.
     //     Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     // }
-
-    // void ActivateSniperCursor()
-    // {
-
-    // }
+    
 #endregion
 
     IEnumerator DeleteObjAfter(GameObject objToDelete, float timer = 0)

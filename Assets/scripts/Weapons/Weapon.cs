@@ -96,7 +96,7 @@ public class Weapon : MonoBehaviour
 
     List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
 
-    // Weapon's particle hit other Player DIRECTLY!!.
+    // Weapon's particle hit other Player DIRECTLY!!
     void OnParticleCollision(GameObject otherPlayer)
     {
         if (otherPlayer == thisPlayer)

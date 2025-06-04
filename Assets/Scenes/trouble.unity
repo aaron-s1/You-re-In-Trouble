@@ -159,8 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseCursor: {fileID: 0}
-  sniperCursor: {fileID: 2800000, guid: 552478a654d2eb8478c30045279d5688, type: 3}
-  hasSniperWeapon: 0
+  sniperCursor: {fileID: 2800000, guid: 11e5ab06858788e4283a67ae91eca8b5, type: 3}
+  usingSniperWeapon: 0
 --- !u!114 &30504414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5408,7 +5408,7 @@ GameObject:
   - component: {fileID: 445638226}
   - component: {fileID: 445638227}
   m_Layer: 10
-  m_Name: GameObject
+  m_Name: Player 1 Shotgun Collider
   m_TagString: Player1Piss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5422,7 +5422,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445638225}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8300171, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11193,8 +11193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseCursor: {fileID: 0}
-  sniperCursor: {fileID: 2800000, guid: 552478a654d2eb8478c30045279d5688, type: 3}
-  hasSniperWeapon: 0
+  sniperCursor: {fileID: 2800000, guid: 11e5ab06858788e4283a67ae91eca8b5, type: 3}
+  usingSniperWeapon: 0
 --- !u!114 &830181367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11562,7 +11562,7 @@ GameObject:
   - component: {fileID: 1568842560}
   - component: {fileID: 1568842561}
   m_Layer: 10
-  m_Name: GameObject (1)
+  m_Name: Player 2 Shotgun Collider
   m_TagString: Player2Piss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11576,7 +11576,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1568842559}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 7.830017, y: 0, z: 0}
+  m_LocalPosition: {x: 6.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11596,7 +11596,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.973343, y: -0.5778723}
+  m_Offset: {x: 2.7980652, y: -0.5778723}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -11607,7 +11607,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.72525024, y: 11.649067}
+  m_Size: {x: 1.0758057, y: 11.649067}
   m_EdgeRadius: 0
 --- !u!1 &1656188830
 GameObject:
@@ -11969,6 +11969,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: sniperCursor
+      value: 
+      objectReference: {fileID: 2800000, guid: 367040cd08c22c549aaf006588ffeeed, type: 3}
+    - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: isBurstWeapon
       value: 1
       objectReference: {fileID: 0}
@@ -12102,7 +12106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5757189417937376303, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6410533116008587884, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: isShotgun
@@ -12924,6 +12928,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
+      propertyPath: sniperCursor
+      value: 
+      objectReference: {fileID: 2800000, guid: 367040cd08c22c549aaf006588ffeeed, type: 3}
+    - target: {fileID: 2483410616144638743, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: isBurstWeapon
       value: 1
       objectReference: {fileID: 0}
@@ -13021,7 +13029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5757189417937376303, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6410533116008587884, guid: b0632380adf20444c98feeddfc31c3a1, type: 3}
       propertyPath: isShotgun

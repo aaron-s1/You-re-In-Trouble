@@ -9,17 +9,23 @@ public class CursorSetter : MonoBehaviour
     [SerializeField] Texture2D baseCursor;
     [SerializeField] Texture2D sniperCursor;
 
-    public bool hasSniperWeapon;
-
-    void OnMouseEnter()
+    public void SetCursor(bool isSniperWeapon)
     {
-        if (hasSniperWeapon)
+        if (isSniperWeapon)
             Cursor.SetCursor(sniperCursor, Vector2.zero, CursorMode.Auto);
-    }
-
-    void OnMouseExit()
-    {
-        if (!hasSniperWeapon)
+        else
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
+
+    // void OnMouseEnter()
+    // {
+    //     // if (usingSniperWeapon)
+    //     //     Cursor.SetCursor(sniperCursor, Vector2.zero, CursorMode.Auto);
+    // }
+
+    // void OnMouseExit()
+    // {
+    //     if (!usingSniperWeapon)
+    //         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    // }
 }

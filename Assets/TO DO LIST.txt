@@ -6,27 +6,47 @@ CORE GAMEPLAY
         - Procedural?
     - Decide on how weapons spawn (and which spawn, and when)
     - Interactable UI Blocks that contain the weapons
-    - Fix collision of particles later
+    
 
-    ~ WEAPONS
+    ~ WEAPONS        
+        - Add pushback (to opposing player) for each Weapon's particles
         - Add more weapons (machine gun?, ...)
-        - Adjust how forces apply for each weapon, and how much, and when
+        - Clean up Particle -> Particle collisions later
+            ... consider using different collider types
 
     ~ PLAYER
         - Health amounts
         - Seperate more Weapon functionality from Movement
 
 VISUALS
-- Make piss particles from Streamer stay active if weapon is changed out
-- New player model
+- Make active piss particles from Streamer* stay active if weapon is changed out
+    (note from later: Why only streamer? Investigate.)
+- New player models
 - Make piss look way better
 - Handle animations (MUCH later)
 
 
 
 
-JOKES
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+JOKES/MEMES
 - swiss miss instant piss
+- the dicktator (hitler)
 
 
 FATALITY JOKES
