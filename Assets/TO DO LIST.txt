@@ -13,6 +13,8 @@ CORE GAMEPLAY
         - Add more weapons (machine gun?, ...)
         - Clean up Particle -> Particle collisions later
             ... consider using different collider types
+        - Animations
+        - Sound clips
 
     ~ PLAYER
         - Health amounts
