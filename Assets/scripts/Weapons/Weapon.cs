@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using CodeMonkey.HealthSystemCM;
 
 
-public enum WeaponType { Streamer, Shotgun, Sniper }
+public enum WeaponType { Streamer, Sniper, Shotgun }
 
 // CONSIDER MOVING PlayerFire.cs WEAPON CHECK LOGIC TO HERE.
 public class Weapon : MonoBehaviour

@@ -55,7 +55,7 @@ public class PlayerFire : MonoBehaviour
         Vector2 playerPosition = rb.position;
 
         if (Input.GetMouseButton(0) && canFireBurstWeapon)
-        {            
+        {
             SetActiveWeapon(shotgunWeapon);
             PerformWeaponBurst(mousePosition, playerPosition);
         }
@@ -71,7 +71,12 @@ public class PlayerFire : MonoBehaviour
 
 
 #region WEAPONS.
-    void SetActiveWeapon(Weapon newWeapon)
+    public void OutsideWeaponEquip(int arrayIndex)
+    {
+        
+    }
+
+    public void SetActiveWeapon(Weapon newWeapon)
     {
         if (activeWeapon == newWeapon)
         {

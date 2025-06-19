@@ -8,7 +8,11 @@ CORE GAMEPLAY
     - Interactable UI Blocks that contain the weapons
     
 
-    ~ WEAPONS        
+    ~ WEAPONS
+        - Add Sniper Weapon
+            - needs trails to enemy target
+            - change crosshair (change it back as needed)
+            
         - Add pushback (to opposing player) for each Weapon's particles
         - Add more weapons (machine gun?, ...)
         - Clean up Particle -> Particle collisions later
@@ -26,6 +30,7 @@ VISUALS
 - New player models
 - Make piss look way better
 - Handle animations (MUCH later)
+- New default crosshair
 
 
 
