@@ -140,7 +140,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: temp weapon selector SHOTGUN
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2140036461423105267, guid: 2f51c660924807f458598a21b2a4b221, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f51c660924807f458598a21b2a4b221, type: 3}
 --- !u!1 &2057947515606591290 stripped

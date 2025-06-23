@@ -7,21 +7,21 @@ public class EquipWeapon : MonoBehaviour
     [Tooltip("Set according to the corresponding Weapon array in Player")] 
     public int arrayOnPlayer;
 
-    // public Image image;
-    // public SpriteRenderer background;
     
-    
-    void OnTriggerEnter2D(Collider2D player)
+    void OnCollisionEnter2D(Collision2D playerCol)
+    // void OnTriggerEnter2D(Collider2D player)
     {
-        if (player.tag == "Player1" || player.tag == "Player2")
+        if (playerCol.gameObject.tag == "Player1" || playerCol.gameObject.tag == "Player2")
         {
-            // image.SetActive(false);
-            // background.SetActive(false);            
-            Weapon targetWeapon = player.transform.GetChild(0).transform.GetChild(arrayOnPlayer)
-                                    .gameObject.GetComponent<Weapon>();
+            GameObject player = playerCol.gameObject;
+            PlayerFire playerFire = player.GetComponent<PlayerFire>();
 
-            Debug.Log($"UI weapon box thing should have made {player} equip {targetWeapon}");
-            player.GetComponent<PlayerFire>().SetActiveWeapon(targetWeapon);
+            GameObject targetWeaponObj = player.transform.GetChild(0).transform.GetChild(arrayOnPlayer).gameObject; // skip over a child due to weapons being children of "Weapons" empty obj
+            Weapon targetWeaponScript = targetWeaponObj.GetComponent<Weapon>();
+
+            Debug.Log($"UI weapon box thing should have made {player} equip {targetWeaponScript}");
+            
+            playerFire.SetActiveWeapon(targetWeaponScript);
             gameObject.SetActive(false);
         }
     }
